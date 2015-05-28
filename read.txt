@@ -1,0 +1,4 @@
+rewrite_module
+activa la opcion php_openssll
+apache module -> include_module
+short open tagg

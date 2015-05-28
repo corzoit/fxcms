@@ -1,0 +1,393 @@
+body{		
+	/*background: url(https://academiatetrix.files.wordpress.com/2012/04/2.jpg) center top;*/
+	min-height: 100%;
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+.container{
+	width: 962px!important;
+	margin: 0 auto;
+}
+
+#fx-container {
+	/*background: url(https://s0.wp.com/wp-content/themes/pub/adventure-journal/images/mp-background-shading.png) center top;*/
+    background-color:#87ceeb;
+	min-height: 100%;
+}
+
+
+
+/* Header Start */
+	.header{		
+		position: relative;	
+	}
+
+	/*#logo {
+		position: absolute;
+		
+		width: 34%;
+		padding: 4px 2px 4px 8px;
+		margin: 15px 10px;
+		background: rgba(255, 255, 255, 0.7);*/
+		/*
+        box-shadow: 0px 2px 6px rgba(0,0,0,0.4);
+        border: 1px solid rgb(231, 231, 231);
+		border-radius: 2px;
+        */
+		/*text-align: center;
+		z-index: 100;
+	}*/
+	#logo {
+		position: absolute;
+		width: 22%;
+		padding: 4px 2px 4px 8px;
+		margin: 15px 256px!important;
+		/*background: rgba(255, 255, 255, 0.7);*/
+		text-align: center;
+		z-index: 100;
+	}
+
+	#logo img{
+		max-width: 100%;
+	}
+
+	#banner {		
+		padding: 6px 0 8px;
+		z-index: 10;
+	}
+	
+	#banner img{
+		background-repeat: no-repeat;
+   		 background-size: 100% 100%;
+		max-width: 100%;
+	}
+
+	/*.carousel-control
+	{
+	    background: none repeat scroll 0 0 #222 !important;
+	    border: 2px solid #fff !important;
+	    border-radius: 23px !important;
+	    color: #fff !important;
+	    font-size: 60px !important;
+	    font-weight: 100 !important;
+	    max-height: 40px !important;
+	    left: 15px !important;
+	    line-height: 25px !important;
+	    margin-top: -20px !important;
+	    opacity: 0.5 !important;
+	    position: absolute !important;
+	    text-align: center !important;
+	    top: 40% !important;
+	    max-width: 40px !important;
+	    margin-right: 17px !important;
+	}
+
+	@media (max-width: 600px) {
+	  	.carousel-control {
+		    font-size: 40px;
+		    max-height: 30px;
+		    max-width: 30px;
+		    line-height: 20px;
+	  }
+	}*/
+/* Header End */
+
+/* Wrapper Start */	
+	.wrapper {
+		margin: auto;
+		overflow: auto;
+		background-color: #ffffff;
+		padding: 20px;
+		width: 98.5%;
+	}
+/* Wrapper End */
+
+/* Content Main Start */
+	.main-content{				
+		float: right;
+		width: 100%;
+		background-color: #f8f8f8;
+		padding: 20px 8px;
+	}
+/* Content Main End */
+
+
+
+/* NavBar Start */
+	
+	.navbar-default .navbar-nav > li > a {
+		color: #2a409a!important;
+		font-size: 22px;
+		padding-left: 4px;
+		font-family: 'Oswald', sans-serif;
+	}
+
+	.dropdown-menu > li > a {
+		color: white!important;
+		font-size: 20px;
+		padding-left: 4px;
+		font-family: 'Oswald', sans-serif;		
+	}
+
+	ul.dropdown-menu {
+		background: skyblue;
+	}
+
+	ul.dropdown-menu > li >a:hover {
+		background-color: #0C17D6;		
+	}
+
+	
+/* NavBar End */
+
+
+/* Footer Start */
+
+	#footer {
+		margin-top: 30px;
+		margin-bottom: 30px
+	}
+
+	.row-follow {
+		width:270px;
+		text-align: center;		
+		padding: 4px;
+		position: fixed;
+		z-index: 5000;
+		right: 20px;
+	}
+
+	.follow {
+		background-color:#324155;
+		cursor:pointer;
+		box-shadow:0px 0px 5px #888888;
+		color:white;;
+		border-radius:4px 4px 0px 0px;
+		padding: 5px !important;
+	}
+
+	.content-follow {
+		padding:15px; 
+		border-radius:4px 0px 0px 0px; 
+		box-shadow:0px 0px 5px #888888; 
+		background-color:#324155; 
+		color:white;
+		float: left;
+	}
+
+	.content-follow input {
+		width:100%; 
+		color:black;
+	}
+
+	#menu_sidebar{
+		height: 450px!important;
+	}
+
+/* End Footer */
+
+/* RESPONSIVE: Mobile ; */
+
+	@media(min-width: 768px) and (max-width: 961px){
+		.navbar{
+			width: 90%!important;
+		}
+		#logo {		
+			width: 22%;			
+			margin: 15px 50px!important;
+		}	
+		.container{
+			width: 95%!important;
+		}		
+		.navbar-default .navbar-nav > li > a {
+			color: #2a409a!important;
+			font-size: 22px;
+			padding-left: 0;
+			font-family: 'Oswald', sans-serif;
+		}
+	}
+
+	@media(min-width: 423px) and (max-width: 767px){
+		.navbar{
+			width: 83%!important;
+		}
+		#logo {		
+			width: 22%;			
+			margin: 15px 50px!important;
+		}
+		.container{
+				width: 90%!important;				
+		}
+		#btn-form{
+			margin-top: 3px!important;
+		}
+
+		
+		.main-content {
+			width: 100%!important;
+			float: none!important;
+		}
+		.icon-facebook-true{
+			display: none!important;
+		}
+
+		.icon-facebook-false{
+			display: block!important;
+		}
+		.wrapper {		
+			width: 97.5%!important;
+		}
+
+		#menu_sidebar{
+			height: 210px!important;
+		}
+		
+			
+	}
+
+	@media(min-width: 240px) and (max-width: 422px){
+		.navbar{
+			width: 87.5%!important;
+		}
+		#logo {		
+			width: 22%;			
+			margin: 15px 20px!important;
+		}
+		.container{
+				width: 100%!important;
+		}
+		#btn-form{
+			margin-top: 3px!important;
+		}
+		.sidebar{
+			width: 100%;
+			float: none;
+		}
+
+		.main-content {
+			width: 100%!important;
+			float: none!important;
+		}
+		
+		#ocultar{
+			display: none;
+		}		
+		#img-gallery {
+			width: 100%;
+		}
+		.icon-facebook-true{
+			display: none!important;
+		}
+
+		.icon-facebook-false{
+			display: block!important;
+		}
+		.wrapper {		
+			width: 96.5%!important;
+			padding: 10px 0 0 0 !important;
+
+		}
+		#menu_sidebar{
+			height: 210px!important;
+		}
+	}
+/* End Responsive Mobile */
+
+
+.navbar-top
+{
+    background-color:#ffffff;
+}
+
+ul
+{
+    list-style-type: none;
+    margin:0px;
+    padding:0px;
+}
+
+.sectionList
+{
+    
+}
+.sectionItem
+{
+    /*padding:10px;*/
+    font-size:18px;
+}
+.pageItem
+{
+    padding:10px;
+    font-size:18px;
+}
+
+
+ h3, .h3 {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+
+
+.carousel-control
+{
+    background: none repeat scroll 0 0 #222;
+    border: 2px solid #fff!important;
+    border-radius: 23px!important;
+    color: #fff;
+    font-size: 60px!important;
+    font-weight: 100!important;
+    max-height: 40px!important;    
+    line-height: 26px!important;
+    margin-top: -20px!important;
+    opacity: 0.5!important;
+    position: absolute!important;
+    text-align: center!important;
+    /*top: 50%;*/
+    top: 53%!important;
+    max-width: 40px!important;
+    margin-right: 17px!important;
+    margin-left: 17px!important;
+}
+
+@media (max-width: 600px) {
+  	.carousel-control {
+	    font-size: 40px;
+	    max-height: 30px;
+	    max-width: 30px ;
+	    line-height: 20px ;
+	}
+	}
+
+	.icon-facebook-true {
+	padding-top: 5px;
+	padding-right: 5px;
+}
+
+
+small, small>a {
+	color: white;
+}
+
+/* ADD MARIO */
+.row{
+	margin:0 auto!important;
+}
+
+.row-content{
+	min-height: 500px;
+}
+
+.form-comment{
+	padding-top: 20px;
+}
+
+
+.sectionMenu .sectionList .sectionItem a {display: block;height: auto;padding: 10px 20px;}
+.sectionMenu{clear: both;background: rgb(135, 206, 235);border-radius: 10px;margin-bottom: 2px;}
+.sectionMenu.active, .sectionMenu:hover { background: rgb(42, 64, 154);}
+.sectionMenuItem:hover{color:white;}
+.sectionMenuItem{color:white;}
+.contentBreadcrumb {margin-top: 4px;}
+/* END */
+

@@ -1,0 +1,17 @@
+#Options +FollowSymlinks
+Options +SymLinksIfOwnerMatch
+
+RewriteEngine on
+
+RewriteBase /FAKUPUCP/
+#RewriteBase /
+
+RewriteCond %{REQUEST_URI}	!(.*)files/(.*)$	[NC]
+RewriteCond %{REQUEST_URI}	!\.(xls|flv|mp4|avi|mpg|wmv|ttf|tmp|png|gif|jpe?g|doc?x|xls?x|ppt?x|pdf|txt|zip|rar|css|js|swf|xml)$	[NC]
+RewriteCond %{REQUEST_URI}	!(.*)_core/interactive/(.*)$	[NC]
+RewriteCond %{REQUEST_URI}	!(.*)_core/antispam(.*)$	[NC]
+RewriteCond %{REQUEST_URI}	!(.*)themes(.*)$	[NC]
+RewriteCond %{REQUEST_URI}	!(.*)_core/video_image(.*)$	[NC]
+RewriteCond %{REQUEST_URI}	!(.*)juegos(.*)$	[NC]
+
+RewriteRule ^(.*)$ flexit.php [NC,L]

@@ -1,0 +1,3 @@
+- Opcion de Eliminar container o Widget
+- Exportar estructura Layouts a tabla 
+- Leer Estructura en page y asociar su layouts
