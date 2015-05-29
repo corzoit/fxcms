@@ -179,14 +179,20 @@
 		);
 	/* END MEDIA */
 
-	/* MEDIA */
+	/* DESIGN */
 		$FX_ROUTES[] = array(
 			'path' => array(
 				'/admin/design/',
 				),
 			'view_file' => 'admin/design/design.php'				
 		);
-	/* END MEDIA */
+		$FX_ROUTES[] = array(
+			'path' => array(
+				'/admin/design/{design_id}',
+				),
+			'view_file' => 'admin/design/edit_design.php'				
+		);
+	/* END DESIGN */
 
 	/* LIST IMAGE */
 	$FX_ROUTES[] = array(

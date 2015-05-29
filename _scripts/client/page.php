@@ -30,7 +30,6 @@ if(isset($__FX_PARAMS['page_id']) && is_numeric($__FX_PARAMS['page_id']))
 	{
 		$not_found_page = true;
 	}
-
 }
 else
 {

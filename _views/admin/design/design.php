@@ -8,11 +8,23 @@
     WIDGET
 </div>
 
-<div class="a-main-container" ></div>
+<p class="text-danger"><?=count($data_design)?'Not Editable..!': ''?></p>
 
-<div>
-    <button>Save</button>
+<div class="a-main-container" >
+    <?php 
+    if(count($data_design))
+    {
+        echo($data_design['html_content']);
+    }
+    ?>
 </div>
+
+<p></p>
+<button class="btn btn-primary">Save</button>
+<a href="" onclick="window.close();" class="btn btn-warning">Close</a>
+
+
+
 
 <script type="text/javascript">
 $(function(){

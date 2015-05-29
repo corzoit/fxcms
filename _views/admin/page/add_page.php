@@ -211,7 +211,30 @@
 								    <?php
 								    }
 								    ?>
-
+								    <!-- DESIGN -->
+								    <?php 
+								    $data_design = $fx_design->getAll();								    
+								    if(count($data_design))
+								    {								    	
+								    ?>
+								    <div class="form-group">								        								       
+								        <label class="control-label col-xs-3"><?=$_LANG[LANG_SYS]['add_pag_lbl_lbl_design']?>:</label>
+								        <div class="col-xs-3">
+								        	<select id="selectDesign" class="form-control" name="design_id">
+								        		<option value="0"><?=$_LANG[LANG_SYS]['add_pag_lbl_lbl_design']?></option>
+								        		<?php foreach ($data_design as $key_design => $val_design){ ?>								        		
+								        			<option value="<?=$val_design['fx_design_id']?>"><?=$val_design['name']?></option>
+								        		<?php } ?>								        		
+								        	</select>
+								        	<div class="viewDesign">
+								        		<p class="text-info">&nbsp;</p>
+								        	</div>
+								        </div>								        
+								    </div>
+									<?php 
+									}
+									?>
+								    <!-- END -->
 								    <div class="form-group">								    	
 										<label class="control-label col-xs-3"><?=$_LANG[LANG_SYS]['add_pag_lbl_lbl_type_comment']?>:</label>
 									    <div class="col-xs-7">
@@ -237,10 +260,10 @@
 								        <div id="content_page_gallery" style="display:none" class="col-xs-10 col-xs-offset-1">								            
 								            <input type="submit" class="btn btn-primary" value="<?=$_LANG[LANG_SYS]['add_pag_btn_create_galery']?>">
 								        </div>
-								    </div>
+								    </div>								    
 								    <div class="form-group">
-								    	<label class="control-label col-xs-3"><?=$_LANG[LANG_SYS]['add_pag_lbl_lbl_cont']?>:</label>
-								        <div id="content_page_none" class="col-xs-10 col-xs-offset-1">
+								    	<label  class="control-label col-xs-3 content_page_none"><?=$_LANG[LANG_SYS]['add_pag_lbl_lbl_cont']?>:</label>
+								        <div class="col-xs-10 col-xs-offset-1 content_page_none">
 								            <textarea class="tinymce_add_page" rows="15" class="form-control" name="<?=$language?>[content]"><?=$_POST[$language]['content']?></textarea>
 								        </div>								       
 								    </div>
@@ -294,36 +317,38 @@
 						<?php
 						}
 						?>
-						<!--<div class="panel panel-primary">
-							<div class="panel-heading"><h3><?=$_LANG[LANG_SYS]['content_manager_title']?><?=$_LANG[LANG_SYS]['add_pag_gr3_title']?>:</h3></div>
-							<div class="panel-body">
-								<div class="form-horizontal">
-								    <div class="form-group">
-								        <label class="control-label col-xs-3"><?=$_LANG[LANG_SYS]['add_pag_gr3_lbl_title']?>:</label>
-								        <div class="col-xs-7">
-								            <input type="text" class="form-control" value="<?=$_POST[$language]['meta_title']?>" name="<?=$language?>[meta_title]">
-								        </div>
-								    </div>
-								    <div class="form-group">
-								        <label class="control-label col-xs-3"><?=$_LANG[LANG_SYS]['add_pag_gr3_lbl_key']?>:</label>
-								        <div class="col-xs-7">
-								            <input type="text" class="form-control" value="<?=$_POST[$language]['meta_keywords']?>" name="<?=$language?>[meta_keywords]">
-								        </div>
-								    </div>
-								    <div class="form-group">
-								        <label class="control-label col-xs-3"><?=$_LANG[LANG_SYS]['add_pag_gr3_lbl_desc']?>:</label>
-								        <div class="col-xs-7">
-								            <input type="text" class="form-control" value="<?=$_POST[$language]['meta_description']?>" name="<?=$language?>[meta_description]">
-								        </div>
-								    </div>
+						<!-- SEO 
+							<div class="panel panel-primary">
+								<div class="panel-heading"><h3><?=$_LANG[LANG_SYS]['content_manager_title']?><?=$_LANG[LANG_SYS]['add_pag_gr3_title']?>:</h3></div>
+								<div class="panel-body">
+									<div class="form-horizontal">
+									    <div class="form-group">
+									        <label class="control-label col-xs-3"><?=$_LANG[LANG_SYS]['add_pag_gr3_lbl_title']?>:</label>
+									        <div class="col-xs-7">
+									            <input type="text" class="form-control" value="<?=$_POST[$language]['meta_title']?>" name="<?=$language?>[meta_title]">
+									        </div>
+									    </div>
+									    <div class="form-group">
+									        <label class="control-label col-xs-3"><?=$_LANG[LANG_SYS]['add_pag_gr3_lbl_key']?>:</label>
+									        <div class="col-xs-7">
+									            <input type="text" class="form-control" value="<?=$_POST[$language]['meta_keywords']?>" name="<?=$language?>[meta_keywords]">
+									        </div>
+									    </div>
+									    <div class="form-group">
+									        <label class="control-label col-xs-3"><?=$_LANG[LANG_SYS]['add_pag_gr3_lbl_desc']?>:</label>
+									        <div class="col-xs-7">
+									            <input type="text" class="form-control" value="<?=$_POST[$language]['meta_description']?>" name="<?=$language?>[meta_description]">
+									        </div>
+									    </div>
+									</div>
 								</div>
 							</div>
-						</div>
 						-->							
 						<div class="form-group" align="center">
 						    <div class="col-xs-12">
 						    	<input type="hidden" name="action" value="add_page">
 						    	<input type="hidden" id="section_type_hidden" name="section_type">
+						    	<p>&nbsp;</p>
 						        <input type="submit" class="btn btn-primary" value="<?=$_LANG[LANG_SYS]['add_pag_lbl_btn_save']?>">
 						        <a href="<?=FX_System::url('admin/page/manager')?>" style="margin-left:30px" type="button" class="btn btn-danger"><?=$_LANG[LANG_SYS]['add_pag_lbl_btn_close']?></a>
 						  	</div>
@@ -339,5 +364,5 @@
 
 <script type="text/javascript">
 	// Js/pages/admin/page/add_page.js		
-   createDateFormat('<?=$format_d?>');   
+   createDateFormat('<?=$format_d?>');      
 </script>

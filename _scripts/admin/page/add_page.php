@@ -6,13 +6,15 @@ if(isset($_SESSION['sysuser_id']))
 	$fx_sys = new FX_Sys();
 	//daniel
 
-	$fx_menu = new FX_Menu();
-	$fx_section = new FX_Section();
-	$fx_page = new FX_Page();
-	$fx_page_lang = new FX_PageLang();
-	$fx_syslang = new FX_SysLang();
-	$fx_product = new FX_Product();
-	$fx_date = new Fx_Date();
+	$fx_menu 		= new FX_Menu();
+	$fx_section 	= new FX_Section();
+	$fx_page 		= new FX_Page();
+	$fx_page_lang	= new FX_PageLang();
+	$fx_syslang 	= new FX_SysLang();
+	$fx_product 	= new FX_Product();
+	$fx_date 		= new Fx_Date();
+	$fx_design 		= new FX_Design();
+	$fx_design_page = new FX_DesignPage();
 	$all_language = $fx_syslang->getAllLanguage();	
 
 	$data = array('deleted' => 0);
@@ -176,7 +178,15 @@ if(isset($_SESSION['sysuser_id']))
 					    						  'hide_no_stock' => $hide_no_stock 
 					    						 );			    	
 					    	$fx_product->insert($data_product);
-					    }				    	
+					    }
+					    if($_POST['design_id'] != 0)
+					    {
+					    	$data_design_page = array(
+					    		'fx_page_id' 	=> $new_id,
+					    		'fx_design_id'	=> $_POST['design_id']
+					    	);
+					    	$fx_design_page->insert($data_design_page);
+					    }
 			    	}
 			    	else
 			    	{
@@ -207,6 +217,16 @@ if(isset($_SESSION['sysuser_id']))
 		{			
 			$errors;
 		}			
+	}
+
+	if($_POST['action'] == "return_design")
+	{
+		if($_POST['design_id'] != 0)
+		{
+			$data_design = $fx_design->getById($_POST['design_id']);
+			echo(json_encode($data_design));
+		}			
+		exit();
 	}
 }
 else

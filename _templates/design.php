@@ -15,9 +15,13 @@
         <link href="<?=FX_System::url("js/libs/jQuery-contextMenu/screen.css")?>" rel="stylesheet" type="text/css" />
         <link href="<?=FX_System::url("js/libs/jQuery-contextMenu/prettify/prettify.sunburst.css")?>" rel="stylesheet" type="text/css" />    
     <!-- Sweeat Alert -->
-        <script src="<?=FX_System::url('js/libs/sweetalert-master/lib/sweet-alert.min.js')?>"></script>
-        <link rel="stylesheet" href="<?=FX_System::url('js/libs/sweetalert-master/lib/sweet-alert.css')?>">
+        <script src="<?=FX_System::url('js/libs/sweetalert/lib/sweetalert.min.js')?>"></script>
+        <link rel="stylesheet" href="<?=FX_System::url('js/libs/sweetalert/lib/sweetalert.css')?>">        
     <!-- END Sweeat   -->
+    <!-- Boostrap -->
+       <script type="text/javascript" src="<?=FX_System::url("js/libs/bootstrap/js/bootstrap.js")?>"></script>
+        <link rel="stylesheet" type="text/css" href="<?=FX_System::url("js/libs/bootstrap/css/bootstrap.css")?>">
+    <!-- End Boostrap -->
 
 	<!-- CONTEXT MENU -->
 	<style type="text/css">
