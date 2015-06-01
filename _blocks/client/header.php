@@ -92,10 +92,10 @@ if(in_array($language, $languages))
 				$fx_slide_show = new FX_SlideShow();
 				// Default SlideShow
 				//$data_slide = $fx_slide_show->getSlideShowBySectionId($__FX_PARAMS['id']);
-				$data_slide = $fx_slide_show->getSlideShowDefault();
+				$data_slide = $fx_slide_show->getSlideShowDefault();				
 				if($data_slide)
-				{
-					$sli_by_slId = $fx_slideShowImage->getSlideShowImageBySlideShowId($data_slide['fx_slideshow_id']);
+				{					
+					$sli_by_slId = $fx_slideShowImage->getSlideShowImageBySlideShowId($data_slide['fx_slideshow_id']);					
 					if(count($sli_by_slId)==0)
 					{
 						$sli_by_slId = $fx_slideShowImage->getByCode("DEFAULT");

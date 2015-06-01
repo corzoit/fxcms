@@ -31,10 +31,10 @@
 							<th style="text-align: center">Actions</th>
 						</tr>
 					</thead>
-					<tbody class="tBody">							
-						<tr class="view_record">
-						<?php foreach ($get_all_slide_show as $key => $data_slide_show) {
+					<tbody class="tBody">													
+						<?php foreach ($get_all_slide_show as $key => $data_slide_show) {						
 						?>
+						<tr class="view_record">
 							<td style="text-align: center"><?=$data_slide_show['title']?></td>
 							<td style="word-wrap: break-word; text-align: center; "><?=$data_slide_show['code']?></td>
 							<td style="text-align: center"><?=$data_slide_show['width']?>; <?=$data_slide_show['height']?></td>

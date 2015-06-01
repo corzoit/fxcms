@@ -152,18 +152,20 @@
 							<?php foreach ($sli_by_slId as $key => $data_slide_show_image) {
 							?>
 								<li class="dd-item" data-id= "<?=$data_slide_show_image['fx_slideshow_image_id']?>" >
-									<div class="dd-handle .col-lg-12" >
-										<div class= "col-xs-2" ><?=$data_slide_show_image['caption']?></div>
-										<div class= "col-xs-8 text-center"><?=$data_slide_show_image['link']?></div>
-										<div class = "col-xs-2">
+									<div class="dd-handle .col-lg-12">
+										<div class= "col-xs-4" ><?=$data_slide_show_image['caption']?></div>
+										<div class= "col-xs-5 text-center"><?=$data_slide_show_image['link']?></div>
+										<div class = "col-xs-3">
 											<button class="btn btn-lg btn-danger pull-right button-ss-image dd-nodrag delete-slide-show-image" success = "<?=$_LANG[LANG_SYS]['msg_success_ss']?>" warning = "<?=$_LANG[LANG_SYS]['msg_delete_ss']?>" data = "<?=$data_slide_show_image['fx_slideshow_image_id']?>" type="button"><?=$_LANG[LANG_SYS]['btn_delete_ss_create']?></button>
 											<button href="<?=FX_System::url('admin/slideshow/edit')?>" class="btn btn-lg pull-right btn-primary button-ss-image dd-nodrag edit-slide-show-image" data = "<?=$data_slide_show_image['fx_slideshow_image_id']?>" type="button"><?=$_LANG[LANG_SYS]['btn-edit-ss']?></button>
 										</div>
 									</div>
 								</li>
-							<?}?>	
+							<?php } ?>	
 						</ol>														
 					</div>
+
+
 				</div>							
 			</div>				
 		</div>

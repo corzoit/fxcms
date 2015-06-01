@@ -38,7 +38,7 @@ class FX_SlideShow extends FX_BasicCRUD{
 
 	public function getSlideShowDefault()
 	{
-		$data = $this->conn->fetchAssoc("SELECT * FROM fx_slideshow ORDER BY fx_slideshow_id desc");
+		$data = $this->conn->fetchAssoc("SELECT * FROM fx_slideshow WHERE deleted = 0 ORDER BY fx_slideshow_id ASC ");
 		return $data;
 	}
 

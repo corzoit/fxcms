@@ -28,7 +28,7 @@
 	var $contentMain = $(".a-main-container");
 	var $divs = $contentMain.find("div");
 	var idsWidget;
-	// Util
+	
 	$.each($divs, function(i, val){		
 		if($(this).hasClass("a-widget"))
 		{			
@@ -39,7 +39,7 @@
 	});		
 
 
-// Insert / Update
+
 $("button").click(function(){        
     var $objMainContainer = $(".a-main-container");
     var design_id = $("#design_id").length == 0 ? "vacioID" : $("#design_id").val();
@@ -98,7 +98,11 @@ $("button").click(function(){
 });        
 
 
-// Add Content Div in Div container 
+
+
+
+
+/* Mario */
 $(function(){
     var is_widget = false;
     var accept_ = ".a-icon[data-type=a-container-v],.a-icon[data-type=a-container-h]";
@@ -121,19 +125,79 @@ $(function(){
             cloned.attr('id', eleId); 
             cloned.addClass("CtxMenuH");
             cloned.appendTo($(this));
-          
-            addWidget(cloned);
+            /*cloned.appendTo($(this)).droppable({
+                accept: ".a-icon[data-type=a-widget]",
+                activeClass: 'droppable-active',
+                hoverClass: 'droppable-hover',
+                greedy: true, 
+                drop: function(ev2, ui2) {                    
+                    var cloned = ui2.draggable.clone();
+                    var eleId = 'wid_' + Date.now()// + '_' + (Math.random() * 1000);
+                    cloned.removeClass('a-icon');
+                    cloned.addClass(cloned.attr('data-type'));
+                    cloned.html('');
+                    cloned.attr('id', eleId);   
+                    cloned.addClass("CtxMenuW");
+
+                    var html = $('<div>').append(cloned).html();            
+                    $(this).append(html);
+
+                    $widgets = $(this).find('> div');
+                    var totalWidgets = $widgets.length;
+                    var per = (100/totalWidgets).toFixed(2);
+                    $.each($widgets, function(i, v){
+                        $(this).css({ 'width': per + '%' });
+                    });
+                    $widgets.resizable();  
+                }
+            });*/
+            verifica___(cloned);
         }
     });
-   
+    
+    if($contentMain.find('div').length)
+    {
+        var accept_ = ".a-icon[data-type=a-widget]";
+        is_widget = true;        
+    }
+
     $contentMain.find('div').mouseover(function(){        
         if($(this).attr('data-type') == "a-container-h" || $(this).attr('data-type') == "a-container-v")
         {
-            addWidget($(this));
-        }     
+            verifica___($(this));
+        }
+        /*{
+            $(this).droppable({
+                accept: accept_,
+                activeClass: 'droppable-active',
+                hoverClass: 'droppable-hover', 
+                drop: function(ev, ui){
+                    if(is_widget)
+                    {
+                        var cloned = ui.draggable.clone();
+                        var eleId = 'wid_' + Date.now()// + '_' + (Math.random() * 1000);
+                        cloned.removeClass('a-icon');
+                        cloned.addClass(cloned.attr('data-type'));
+                        cloned.html('');
+                        cloned.attr('id', eleId);   
+                        cloned.addClass("CtxMenuW");
+
+                        var html = $('<div>').append(cloned).html();            
+                        $(this).append(html);
+
+                        $widgets = $(this).find('> div');
+                        var totalWidgets = $widgets.length;
+                        var per = (100/totalWidgets).toFixed(2);
+                        $.each($widgets, function(i, v){
+                            $(this).css({ 'width': per + '%' });
+                        });
+                    }                                     
+                } 
+            });   
+        } */
     });
 
-    function addWidget(fdsfdsf)
+    function verifica___(fdsfdsf)
     {                
             fdsfdsf.droppable({
                 accept: ".a-icon[data-type=a-widget]",

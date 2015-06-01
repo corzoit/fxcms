@@ -238,39 +238,38 @@ if($_POST['action'] == "new-image")
 }
 
 if($_POST['new-image'])
-{	
-	$is_insert_slideShow = false;		
-	$response = array();
-	$caption_ok = true;
+{
+	/*var_dump($_POST);
+	var_dump($_FILES);
+	exit();*/	
+	$is_insert_slideShow = false;
 	
-	foreach ($_POST as $language => $values) 
+	//valiodation error
+	$response = array();
+	foreach ($_POST as $language => $value) 
 	{
-		if(is_array($values))
+		if($value['caption'] == null)
 		{
-			$caption_ok = strlen(trim($values['caption'])) ? true : false;			
-			if(!$caption_ok)
-			{
-				$response[] = array(
-					'error' => $_LANG[LANG_SYS]['field_add_msg_error_required'].$language);				
-			}
-			if($language == LANG_SYS && count($_FILES))
-		    {
-			    if(strlen(trim($_FILES[$language]['name']['image'])))
-			    {
-				    $is_valid_image = CC_FileHandler::checkFilenameExt($_FILES[$language]['name']['image'], array('jpg', 'png')) ? $_FILES[$language]['name']['image'] : false;
-			    }
-			    if(!$is_valid_image)
-			    {
-			    	$error_image = $_LANG[LANG_SYS]['add_ss_msg_error_img_inval'];
-			    	
-			    	$response[] = array(
-						'error' => $error_image);
-			    }
-		    }						
+			$response[] = array(
+				'error' => $_LANG[LANG_SYS]['field_add_msg_error_required'].$language);
 		}
 
+		//validation image in slide_show_image
+	    if($language == LANG_SYS && count($_FILES))
+	    {
+		    if(strlen(trim($_FILES[$language]['name']['image'])))
+		    {
+			    $is_valid_image = CC_FileHandler::checkFilenameExt($_FILES[$language]['name']['image'], array('jpg', 'png')) ? $_FILES[$language]['name']['image'] : false;
+		    }
+		    if(!$is_valid_image)
+		    {
+		    	$error_image = $_LANG[LANG_SYS]['add_ss_msg_error_img_inval'];
+		    	
+		    	$response[] = array(
+					'error' => $error_image);
+		    }
+	    }
 	}
-
 	if(!empty($response))
 	{
 		echo(json_encode($response));
@@ -279,64 +278,71 @@ if($_POST['new-image'])
 	else
 	{
 		foreach ($_POST as $language => $value) 
-		{		
-			if(is_array($value))
-			{					
-				$fx_slideshow_id = $_POST[$language]['slide_show_id'];
-				$caption = $_POST[$language]['caption'];
-				$image =  $_FILES[$language]['name']['image'];
-				$opt_link = (!empty($_POST[$language]['opt_link'])) ? 1 : 0;
-				$link_external = $_POST[$language]['link_external']; 
-				$link = $_POST[$language]['link'];
+		{
+			//echo('$language'.$language);
+			$fx_slideshow_id = $_POST[$language]['slide_show_id'];
+			$caption = $_POST[$language]['caption'];
+			$image =  $_FILES[$language]['name']['image'];
+			$opt_link = (!empty($_POST[$language]['opt_link'])) ? 1 : 0;
+			$link_external = $_POST[$language]['link_external']; 
+			$link = $_POST[$language]['link'];
+			//if choose no external link, link_target is self	
+			if($link_external == 0)
+			{
+				$link_target = '_self';	
+			}
+			else
+			{
+				$link_target = $_POST[$language]['link_target'];		
+			}
 
-				//if choose no external link, link_target is self
-				$link_target = $link_external == 0 ? '_self' : $_POST[$language]['link_target'];			
-				$position = 0;
+			$position = 0;
 
-				if(!$is_insert_slideShow)
-				{	    	
-			    	$image_name = $image; 
-				    if(strlen($image))
-			    	{
-			    		$name_valid_image = CC_FileHandler::formatFilename($image);
-			    		$image_name =  CC_FileHandler::generateFilenameRandom($name_valid_image, 5, false);
-			    		CC_FileHandler::uploadFile($image_name, $_FILES[$language]['tmp_name']['image'], "file/img/slideshow/", "");
-			    	}
+			if(!$is_insert_slideShow)
+			{
+		    	//echo("1111111111111111");
+		    	$image_name = $image; 
+			    if(strlen($image))
+		    	{
+		    		$name_valid_image = CC_FileHandler::formatFilename($image);
+		    		$image_name =  CC_FileHandler::generateFilenameRandom($name_valid_image, 5, false);
+		    		CC_FileHandler::uploadFile($image_name, $_FILES[$language]['tmp_name']['image'], "file/img/slideshow/", "");
+		    	}
 
-			    	$position = $fx_slideShowImage->getPositionBySsId($fx_slideshow_id);
+		    	$position = $fx_slideShowImage->getPositionBySsId($fx_slideshow_id);
 
-			    	$data_slide_show_image = array(
-						'fx_slideshow_id' => $fx_slideshow_id, 
-						'image' => FX_System::saveStrDb($image_name), 
-						'caption' => FX_System::saveStrDb($caption),  
-						'opt_link' => $opt_link,  
-						'link' => FX_System::saveStrDb($link),  
-						'link_target' => FX_System::saveStrDb($link_target),  
-						'link_external' => $link_external,  
-						'position' => $position + 1, 
-						'deleted' => 0, 
+		    	$data_slide_show_image = array(
+					'fx_slideshow_id' => $fx_slideshow_id, 
+					'image' => FX_System::saveStrDb($image_name), 
+					'caption' => FX_System::saveStrDb($caption),  
+					'opt_link' => $opt_link,  
+					'link' => FX_System::saveStrDb($link),  
+					'link_target' => FX_System::saveStrDb($link_target),  
+					'link_external' => $link_external,  
+					'position' => $position + 1, 
+					'deleted' => 0, 
+				);
+				$fx_slideShowImage_id = $fx_slideShowImage->insert($data_slide_show_image, true);
+				
+				$is_insert_slideShow = true;
+			}
+			else
+			{
+				//echo("2222222222222222");
+				$data_slide_show_image_lang = array(
+						'fx_slideshow_image_id' => $fx_slideShowImage_id,
+						'lang' => FX_System::saveStrDb($language),
+						'caption' => FX_System::saveStrDb($caption) 
 					);
-					$fx_slideShowImage_id = $fx_slideShowImage->insert($data_slide_show_image, true);
-					
-					$is_insert_slideShow = true;
-				}
-				else
-				{				
-					$data_slide_show_image_lang = array(
-							'fx_slideshow_image_id' => $fx_slideShowImage_id,
-							'lang' => FX_System::saveStrDb($language),
-							'caption' => FX_System::saveStrDb($caption) 
-						);
-					
-					$fx_slideShowImage_lang->insert($data_slide_show_image_lang);
-				}
+				/*var_dump($data_slide_show_image_lang);
+				exit();*/
+				$fx_slideShowImage_lang->insert($data_slide_show_image_lang);
 			}
 		}
 		$response = array(
-			'success' => $_LANG[LANG_SYS]['add_pag_msg_success']
-		);
+			'success' => $_LANG[LANG_SYS]['add_pag_msg_success']);
 	}
-	echo(json_encode($response));	
+	echo(json_encode($response));
 	exit();
 }
 
@@ -549,30 +555,26 @@ if($_POST['save-edit-slideshow-image'] == "save-edit-slideshow-image")
 	$response = array();
 	foreach ($_POST as $language => $value) 
 	{
-		if(is_array($value))
-		{							
-			$caption_ok = strlen(trim($value['caption'])) ? true : false;			
-			if(!$caption_ok)
-			{
-				$response[] = array(
-					'error' => $_LANG[LANG_SYS]['field_add_msg_error_required'].$language);				
-			}
-
-			if($language == LANG_SYS && !empty($_FILES))
-		    {
-			    if(strlen(trim($_FILES[$language]['name']['image'])))
-			    {
-				    $is_image_valid = CC_FileHandler::checkFilenameExt($_FILES[$language]['name']['image'], array('jpg', 'png')) ? $_FILES[$language]['name']['image'] : false;
-			    }
-			    if(!$is_image_valid)
-			    {
-			    	$error_image = $_LANG[LANG_SYS]['add_ss_msg_error_img_inval'];
-			    	
-			    	$response[] = array(
-						'error' => $error_image);
-			    }
-		    }
+		if($value['caption'] == null)
+		{
+			$response[] = array(
+				'error' => $_LANG[LANG_SYS]['field_add_msg_error_required'].$language);
 		}
+
+		if($language == LANG_SYS && !empty($_FILES))
+	    {
+		    if(strlen(trim($_FILES[$language]['name']['image'])))
+		    {
+			    $is_image_valid = CC_FileHandler::checkFilenameExt($_FILES[$language]['name']['image'], array('jpg', 'png')) ? $_FILES[$language]['name']['image'] : false;
+		    }
+		    if(!$is_image_valid)
+		    {
+		    	$error_image = $_LANG[LANG_SYS]['add_ss_msg_error_img_inval'];
+		    	
+		    	$response[] = array(
+					'error' => $error_image);
+		    }
+	    }
 	}
 	if(!empty($response))
 	{
@@ -583,90 +585,87 @@ if($_POST['save-edit-slideshow-image'] == "save-edit-slideshow-image")
 	{
 		foreach ($_POST as $language => $value) 
 		{
-			if(is_array($value))
+			$caption = $_POST[$language]['caption'];
+			$image =  $_FILES[$language]['name']['image'];
+			$opt_link = (!empty($_POST[$language]['opt_link'])) ? 1 : 0;
+			$link_external = $_POST[$language]['link_external']; 
+			$link = $_POST[$language]['link'];
+			//if choose no external link, link_target is self	
+			if($link_external == 0)
 			{
-				$caption = $_POST[$language]['caption'];
-				$image =  $_FILES[$language]['name']['image'];
-				$opt_link = (!empty($_POST[$language]['opt_link'])) ? 1 : 0;
-				$link_external = $_POST[$language]['link_external']; 
-				$link = $_POST[$language]['link'];
-				//if choose no external link, link_target is self	
-				if($link_external == 0)
+				$link_target = '_self';	
+			}
+			else
+			{
+				$link_target = $_POST[$language]['link_target'];		
+			}
+
+			$position = 0;
+
+			if(!$is_update_slideShow)
+			{
+				$fx_slideshow_image_id = $value['id'];
+				
+				//select image old
+				$select_image_delete = $fx_slideShowImage->getPathImageBySlideShowImageId($fx_slideshow_image_id);
+				$path_image_delete = "file/img/slideshow/".$select_image_delete;
+				
+				$image_name = $image; 
+				
+				//if change image delete old image and create other image
+			    if(strlen($image))
+		    	{
+		    		//delete image old
+		    		unlink($path_image_delete);
+		    		
+		    		$name_valid_image = CC_FileHandler::formatFilename($image);
+		    		$image_name =  CC_FileHandler::generateFilenameRandom($name_valid_image, 5, false);
+		    		CC_FileHandler::uploadFile($image_name, $_FILES[$language]['tmp_name']['image'], "file/img/slideshow/", "");
+		    	}
+				
+				$data_slide_show_image = array(
+					'image' => FX_System::saveStrDb($image_name), 
+					'caption' => FX_System::saveStrDb($caption),  
+					'opt_link' => $opt_link,  
+					'link' => FX_System::saveStrDb($link),  
+					'link_target' => FX_System::saveStrDb($link_target),  
+					'link_external' => $link_external,  
+					'position' => $position, 
+					'deleted' => 0, 
+				);
+
+				//if no change image keep image
+				if(empty($image))
 				{
-					$link_target = '_self';	
+					unset($data_slide_show_image['image']);
+				}
+
+				$fx_slideShowImage->update($data_slide_show_image, $fx_slideshow_image_id);
+				$is_update_slideShow = true;
+			}
+			else
+			{
+				$fx_slideshow_image_lang_id = $value['id'];
+				
+				//if exits register update, if not insert
+				if(!empty($fx_slideshow_image_lang_id))
+				{
+					$data_slide_show_image_lang = array(
+						'caption' => FX_System::saveStrDb($caption) 
+					);
+					
+					$fx_slideShowImage_lang->update($data_slide_show_image_lang, $fx_slideshow_image_lang_id);
 				}
 				else
 				{
-					$link_target = $_POST[$language]['link_target'];		
-				}
-
-				$position = 0;
-
-				if(!$is_update_slideShow)
-				{
-					$fx_slideshow_image_id = $value['id'];
-					
-					//select image old
-					$select_image_delete = $fx_slideShowImage->getPathImageBySlideShowImageId($fx_slideshow_image_id);
-					$path_image_delete = "file/img/slideshow/".$select_image_delete;
-					
-					$image_name = $image; 
-					
-					//if change image delete old image and create other image
-				    if(strlen($image))
-			    	{
-			    		//delete image old
-			    		unlink($path_image_delete);
-			    		
-			    		$name_valid_image = CC_FileHandler::formatFilename($image);
-			    		$image_name =  CC_FileHandler::generateFilenameRandom($name_valid_image, 5, false);
-			    		CC_FileHandler::uploadFile($image_name, $_FILES[$language]['tmp_name']['image'], "file/img/slideshow/", "");
-			    	}
-					
-					$data_slide_show_image = array(
-						'image' => FX_System::saveStrDb($image_name), 
-						'caption' => FX_System::saveStrDb($caption),  
-						'opt_link' => $opt_link,  
-						'link' => FX_System::saveStrDb($link),  
-						'link_target' => FX_System::saveStrDb($link_target),  
-						'link_external' => $link_external,  
-						'position' => $position, 
-						'deleted' => 0, 
+					$data_slide_show_image_lang = array(
+						'fx_slideshow_image_id' => $fx_slideshow_image_id,
+						'lang' => FX_System::saveStrDb($language),
+						'caption' => FX_System::saveStrDb($caption) 
 					);
 
-					//if no change image keep image
-					if(empty($image))
-					{
-						unset($data_slide_show_image['image']);
-					}
-
-					$fx_slideShowImage->update($data_slide_show_image, $fx_slideshow_image_id);
-					$is_update_slideShow = true;
-				}			
-				else
-				{
-					$fx_slideshow_image_lang_id = $value['id'];
-					
-					//if exits register update, if not insert
-					if(!empty($fx_slideshow_image_lang_id))
-					{
-						$data_slide_show_image_lang = array(
-							'caption' => FX_System::saveStrDb($caption) 
-						);
-						
-						$fx_slideShowImage_lang->update($data_slide_show_image_lang, $fx_slideshow_image_lang_id);
-					}
-					else
-					{
-						$data_slide_show_image_lang = array(
-							'fx_slideshow_image_id' => $fx_slideshow_image_id,
-							'lang' => FX_System::saveStrDb($language),
-							'caption' => FX_System::saveStrDb($caption) 
-						);
-
-						$fx_slideShowImage_lang->insert($data_slide_show_image_lang);
-					}	
-				}
+					$fx_slideShowImage_lang->insert($data_slide_show_image_lang);
+				}	
 			}
 		}
 		$response = array(
