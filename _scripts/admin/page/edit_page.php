@@ -18,11 +18,16 @@ if(isset($_SESSION['sysuser_id']))
 	$menu = $fx_menu->getByFilter($data, "", false);
 	$all_language = $fx_syslang->getAllLanguage();
 
-	//daniel
 	$fxsys_data = $fx_sys->getById(1); 
-	//daniel
+
+	$format_date = $fxsys_data['dt_format'];
+
+	if($format_date == 'd/m/y h:i a')
+	{
+		$format_d = 'DD/MM/YY hh:mm a';
+	}
 	
-	if(isset($__FX_PARAMS['id']) and is_numeric($__FX_PARAMS['id']))
+	if(isset($__FX_PARAMS['id']) && is_numeric($__FX_PARAMS['id']))
 	{
 		$data = array('fx_page_id' => $__FX_PARAMS['id'], 'deleted' => 0);
 		$data_page = $fx_page->getByFilter($data, '', 1);
@@ -32,10 +37,10 @@ if(isset($_SESSION['sysuser_id']))
 		$data = array('fx_page_id' => $__FX_PARAMS['id']);
 		$data_product = $fx_product->getByFilter($data, '', 1);
 
-		if($data_page and $data_section)
+		if($data_page && $data_section)
 		{
 			$page_id = $__FX_PARAMS['id'];
-			if(isset($_POST['action']) and $_POST['action']=='edit_page')
+			if(isset($_POST['action']) && $_POST['action']=='edit_page')
 			{	
 				$fx_syslang = new FX_SysLang();
 				$all_language = $fx_syslang->getAllLanguage();	
@@ -45,44 +50,59 @@ if(isset($_SESSION['sysuser_id']))
 				$errors = array();
 				foreach ($_POST as $key => $value) 
 				{
-					$section_id = is_numeric(strlen(trim($_POST[$key]['section_id']))) ? true : false; 
-					$section_id = is_numeric(strlen(trim($_POST[$key]['section_id']))) ? true : false;
-				    $title_page = strlen(trim($_POST[$key]['title_page'])) ? true : false;
-				    
-				    if(LANG_SYS == $key)
-				    {
-					    $thumbnail = '';
-					    if(strlen(trim($_FILES[$key]['name']['thumbnail'])))
+					if(is_array($value))
+					{											   
+					    if(LANG_SYS == $key)
+					    {					
+					    	$section_id = strlen(is_numeric(trim($_POST[$key]['section_id']))) ? true : false; 					
+						    $title_page = strlen(trim($_POST[$key]['title_page'])) ? true : false;
+						    $start_dt =  strlen(trim($_POST[$key]['start_dt'])) ? true : false;
+					    	$end_dt =  strlen(trim($_POST[$key]['end_dt'])) ? true : false;
+						    $thumbnail = '';
+						    $image = '';
+						    /*  Check::::
+							    if(strlen(trim($_FILES[$key]['name']['thumbnail'])))
+							    {
+							    	$thumbnail = CC_FileHandler::checkFilenameExt($_FILES[$key]['name']['thumbnail'], array('jpg', 'png')) ? $_FILES[$key]['name']['thumbnail'] : false;
+							    }
+							    
+							    if(strlen(trim($_FILES[$key]['name']['image'])))
+							    {
+								    $image = CC_FileHandler::checkFilenameExt($_FILES[$key]['name']['image'], array('jpg', 'png')) ? $_FILES[$key]['name']['image'] : false;
+							    }
+
+							    if($thumbnail == false || $image == false)
+							    {
+							    	$count_error_image = $count_error_image + 1;
+							    	$error_image = $_LANG[LANG_SYS]['edit_pag_msg_error_img_inval'];
+							    	$errors[$key]['error_image_invalids'] = $error_image;
+							    }
+							*/
+						}    
+					    
+					    if(LANG_SYS == $key && ($section_id == false || $title_page == false || $start_dt == false || $end_dt == false))
 					    {
-					    	$thumbnail = CC_FileHandler::checkFilenameExt($_FILES[$key]['name']['thumbnail'], array('jpg', 'png')) ? $_FILES[$key]['name']['thumbnail'] : 'false';
-					    }
-					    $image = '';
-					    if(strlen(trim($_FILES[$key]['name']['image'])))
+					    	echo("<p>LANG_SYS ==". $key."<p>");
+					    	echo("<p>section_id ==". $section_id."<p>");
+					    	echo("<p>title_page ==". $title_page."<p>");
+					    	echo("<p>start_dt ==". $start_dt."<p>");
+					    	echo("<p>end_dt ==". $end_dt."<p>");
+
+					    	$error = $_LANG[LANG_SYS]['edit_pag_msg_error_required']; 
+					    	$count_error_fields_required = $count_error_fields_required + 1;
+					    	$errors[$key]['error_field_required'] = $error;
+
+					    }  	
+					    else if(LANG_SYS != $key && $title_page == false)
 					    {
-						    $image = CC_FileHandler::checkFilenameExt($_FILES[$key]['name']['image'], array('jpg', 'png')) ? $_FILES[$key]['name']['image'] : 'false';
+					    	$error = $_LANG[LANG_SYS]['edit_pag_msg_error_required']; 
+					    	$count_error_fields_required = $count_error_fields_required + 1;
+					    	$errors[$key]['error_field_required'] = $error;
 					    }
-					    if($thumbnail == 'false' || $image == 'false')
-					    {
-					    	$count_error_image = $count_error_image + 1;
-					    	$error_image = $_LANG[LANG_SYS]['edit_pag_msg_error_img_inval'];
-					    	$errors[$key]['error_image_invalids'] = $error_image;
-					    }
-					}    
-				    if(LANG_SYS == $key and ($section_id == false or $title_page == false))
-				    {
-				    	$error = $_LANG[LANG_SYS]['edit_pag_msg_error_required']; 
-				    	$count_error_fields_required = $count_error_fields_required + 1;
-				    	$errors[$key]['error_field_required'] = $error;
-				    }  	
-				    else if(LANG_SYS != $key and $title_page == false)
-				    {
-				    	$error = $_LANG[LANG_SYS]['edit_pag_msg_error_required']; 
-				    	$count_error_fields_required = $count_error_fields_required + 1;
-				    	$errors[$key]['error_field_required'] = $error;
-				    }
+					}					
 				}
 
-				if($count_error_image == 0 and $count_error_fields_required == 0)
+				if($count_error_image == 0 && $count_error_fields_required == 0)
 				{
 					$d[LANG_SYS] = $_POST[LANG_SYS];
 					$_POST = $d + $_POST; 
@@ -125,9 +145,9 @@ if(isset($_SESSION['sysuser_id']))
 						    	$data = $fx_page->getByFilter($filter , "", 1);
 
 			    				$image_name = $image; 
-							    if(strlen($image) and $image != 'false')
+							    if(strlen($image) && $image != 'false')
 						    	{
-						    		if($data['image'] and file_exists("file/img/page/image/".$data['image']))	
+						    		if($data['image'] && file_exists("file/img/page/image/".$data['image']))	
 						    		{
 						    			unlink('file/img/page/image/'.$data['image']);	
 						    		}
@@ -137,9 +157,9 @@ if(isset($_SESSION['sysuser_id']))
 						    	}
 
 						    	$thumbnail_name = $thumbnail;
-						    	if(strlen($thumbnail) and $thumbnail != 'false')
+						    	if(strlen($thumbnail) && $thumbnail != 'false')
 						    	{
-						    		if($data['thumbnail'] and file_exists("file/img/page/thumbnail/".$data['thumbnail']))	
+						    		if($data['thumbnail'] && file_exists("file/img/page/thumbnail/".$data['thumbnail']))	
 						    		{
 						    			unlink('file/img/page/thumbnail/'.$data['thumbnail']);
 						    		}
@@ -229,6 +249,11 @@ if(isset($_SESSION['sysuser_id']))
 					    	}
 					    }
 					}
+					if($_POST[LANG_SYS]['page_type'] == "Gallery")
+					{					
+						FX_System::redirect(FX_System::url("admin/page/galery/?fx_page_id=".$page_id),true);
+					}
+
 					$message = $_LANG[LANG_SYS]['edit_pag_msg_success'];
 		    		$data = array('fx_page_id' => $page_id, 'deleted' => 0);
 					$data_page = $fx_page->getByFilter($data, '', 1);

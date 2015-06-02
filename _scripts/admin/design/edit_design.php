@@ -10,7 +10,7 @@ if(isset($_SESSION['sysuser_id']))
 		$data_design = $fx_design->getById($__FX_PARAMS['design_id']);
 	}
 
-	if($_POST['action'] == "saveDesign")
+	if($_POST['action'] == "updateDesign")
 	{
 		$obj_design = new FX_Design();
 		$design_id = $_POST['design_id'];

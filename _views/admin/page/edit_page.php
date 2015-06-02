@@ -276,38 +276,42 @@
 											}							
 											?>
 									</div>
-									<div class="form-group">
-										<label class="control-label col-xs-3">comment type:</label>
+									
+									<div class="form-group">								    	
+										<label class="control-label col-xs-3"><?=$_LANG[LANG_SYS]['add_pag_lbl_lbl_type_comment']?>:</label>
 									    <div class="col-xs-7">
-								            <input id="chk_comment_type_none" <? echo $checked = $data_page['comments_type'] == 'none' ? "checked='checked'" : "" ?> type="radio" value="none" name="<?=$language?>[comments_type]">none
-								            <input <? echo $checked = $data_page['comments_type'] == 'admin' ? "checked='checked'" : "" ?> type="radio" value="admin" name="<?=$language?>[comments_type]">admin
+									    	<?php 									    	
+									    	$checked_default =  $data_page['comments_type'] == null ? "checked='checked'" : "";  									    	
+											$checked_comment = ($checked_default == "") ? ($data_page['comments_type'] == 'none') ? ("checked='checked'") :("") : ("checked='checked'");									    	
+									    	?>
+								            <input id="chk_comment_type_none" <?=$checked_comment?> type="radio" value="none" name="<?=$language?>[comments_type]"><?=$_LANG[LANG_SYS]['add_pag_check_type_comments_none']?>
+								            <input <?=$checked_comment = $data_page['comments_type'] == 'admin' ? "checked='checked'" : "" ?> type="radio" value="admin" name="<?=$language?>[comments_type]"><?=$_LANG[LANG_SYS]['add_pag_check_type_comments_admin']?>
 								        </div>
 									</div>
 									<?php
 									}
-									?>			    
-								    <div class="form-group">
-								        <label class="control-label col-xs-3"><?=$_LANG[LANG_SYS]['edit_pag_lbl_lbl_cont']?>:</label>
-								        <!-- <div class="col-xs-7">
-								            <textarea class="tinymce_edit_page" rows="10" class="form-control" name="<?=$language?>[content]"><?=$data_page['content']?>
-								            </textarea>
-								        </div> -->
+									?>
+									<div class="form-group">								        								       
+								        <label class="control-label col-xs-3"><?=$_LANG[LANG_SYS]['add_pag_lbl_lbl_type_page']?>:</label>
 								        <div class="col-xs-7">
-								            <input id="chk_page_type_none" <? echo $checked = $data_page['page_type'] == 'none' ? "checked='checked'" : "" ?> type="radio" value="none" name="<?=$language?>[page_type]">none
-								            <input id="chk_page_type_gallery" <? echo $checked = $data_page['page_type'] == 'Gallery' ? "checked='checked'" : "" ?> type="radio" value="Gallery" name="<?=$language?>[page_type]">gallery
+								        	<?php 									    	
+									    	$checked_default =  $data_page['page_type'] == null ? "checked='checked'" : "";
+											$checked_page = ($checked_default == "") ? ($data_page['page_type'] == 'none') ? ("checked='checked'") :("") : ("checked='checked'");
+									    	?>
+								            <input id="chk_page_type_none" <?=$checked_page?> type="radio" value="none" name="<?=$language?>[page_type]"><?=$_LANG[LANG_SYS]['add_pag_check_type_page_none']?>
+								            <input id="chk_page_type_gallery" <?=$checked_page = $data_page['page_type'] == 'Gallery' ? "checked='checked'" : "" ?> type="radio" value="Gallery" name="<?=$language?>[page_type]"><?=$_LANG[LANG_SYS]['add_pag_check_type_page_galery']?>
 								        </div>
-								    </div>
+								        <div id="content_page_gallery" style="<?=$data_page['page_type'] == 'Gallery'? 'display:block':'display:none'?>" class="col-xs-10 col-xs-offset-1">								            
+								            <input type="submit" class="btn btn-primary" value="<?=$_LANG[LANG_SYS]['add_pag_btn_edit_galery']?>">
+								        </div>
+								    </div>								    
 								    <div class="form-group">
-								        <div id="content_page_none" class="col-xs-10 col-xs-offset-1">
-								            <textarea class="tinymce_edit_page" rows="15" class="form-control" name="<?=$language?>[content]"><?=$data_page['content']?></textarea>
-								        </div>
-								        <div id="content_page_gallery" style="display:none" class="col-xs-10 col-xs-offset-1">
-								            <a href='<?=FX_System::url("admin/list/?type=galeria")?>' class="gallery btn btn-success">Suba imagenes para su galeria</a>
-								            <a href="#" class="fancyAddContact btn btn-primary" onclick="formEditContact();" role="button" >Test</a>								            
-								        </div>
-
-								    </div>
-								</div>
+								    	<label  class="control-label col-xs-3 content_page_none"><?=$_LANG[LANG_SYS]['add_pag_lbl_lbl_cont']?>:</label>
+								        <div class="col-xs-10 col-xs-offset-1 content_page_none">
+								            <textarea class="tinymce_add_page" rows="15" class="form-control" name="<?=$language?>[content]"><?=$data_page['content']?></textarea>
+								        </div>								       
+								    </div>			    						
+								</div>								
 							</div>
 						</div>
 						<?php
@@ -357,31 +361,33 @@
 						<?php
 						}
 						?>
-						<div class="panel panel-primary">
-							<div class="panel-heading"><h3><?=$_LANG[LANG_SYS]['edit_pag_gr3_title']?>:</h3></div>
-							<div class="panel-body">
-								<div class="form-horizontal">
-								    <div class="form-group">
-								        <label class="control-label col-xs-3"><?=$_LANG[LANG_SYS]['edit_pag_gr3_lbl_title']?>:</label>
-								        <div class="col-xs-7">
-								            <input type="text" class="form-control" value="<?=$data_page['meta_title']?>" name="<?=$language?>[meta_title]">
-								        </div>
-								    </div>
-								    <div class="form-group">
-								        <label class="control-label col-xs-3"><?=$_LANG[LANG_SYS]['edit_pag_gr3_lbl_key']?>:</label>
-								        <div class="col-xs-7">
-								            <input type="text" class="form-control" value="<?=$data_page['meta_keywords']?>" name="<?=$language?>[meta_keywords]">
-								        </div>
-								    </div>
-								    <div class="form-group">
-								        <label class="control-label col-xs-3"><?=$_LANG[LANG_SYS]['edit_pag_gr3_lbl_desc']?>:</label>
-								        <div class="col-xs-7">
-								            <input type="text" class="form-control" value="<?=$data_page['meta_description']?>" name="<?=$language?>[meta_description]">
-								        </div>
-								    </div>
+						<!-- SEO 
+							<div class="panel panel-primary">
+								<div class="panel-heading"><h3><?=$_LANG[LANG_SYS]['edit_pag_gr3_title']?>:</h3></div>
+								<div class="panel-body">
+									<div class="form-horizontal">
+									    <div class="form-group">
+									        <label class="control-label col-xs-3"><?=$_LANG[LANG_SYS]['edit_pag_gr3_lbl_title']?>:</label>
+									        <div class="col-xs-7">
+									            <input type="text" class="form-control" value="<?=$data_page['meta_title']?>" name="<?=$language?>[meta_title]">
+									        </div>
+									    </div>
+									    <div class="form-group">
+									        <label class="control-label col-xs-3"><?=$_LANG[LANG_SYS]['edit_pag_gr3_lbl_key']?>:</label>
+									        <div class="col-xs-7">
+									            <input type="text" class="form-control" value="<?=$data_page['meta_keywords']?>" name="<?=$language?>[meta_keywords]">
+									        </div>
+									    </div>
+									    <div class="form-group">
+									        <label class="control-label col-xs-3"><?=$_LANG[LANG_SYS]['edit_pag_gr3_lbl_desc']?>:</label>
+									        <div class="col-xs-7">
+									            <input type="text" class="form-control" value="<?=$data_page['meta_description']?>" name="<?=$language?>[meta_description]">
+									        </div>
+									    </div>
+									</div>
 								</div>
 							</div>
-						</div>
+						-->
 						
 						<div class="form-group" align="center">
 						    <div class="col-xs-12">
@@ -408,126 +414,6 @@
 </div>
 
 <script type="text/javascript">
-	<?php
-	
-		$format_date = $fxsys_data['dt_format'];
-		if($format_date == 'd/m/y h:i a')
-		{
-			$format_d = 'DD/MM/YY hh:mm a';
-		}
-	?>
-    $('#datetime_show').datetimepicker({format:'<?=$format_d?>'});    
-    $('#datetime_hide').datetimepicker({format:'<?=$format_d?>'});
-    
-
-    var selected_section_section_type_default = $(".selectpicker option:selected").attr('data');
-	if(selected_section_section_type_default == 'Standard') {
-		$("#form_product").css({'display' : 'none'});
-		$('input[name=section_type]').val(selected_section_section_type_default);
-	}
-	$('.selectpicker').on('change', function() {
-	  var selected_section_section_type = $(".selectpicker option:selected").attr('data');	
-		if(selected_section_section_type == 'Standard') {
-			$("#form_product").css({'display' : 'none'});
-			$('input[name=section_type]').val(selected_section_section_type);
-		}	
-		else
-		{
-			$("#form_product").css({'display' : 'block'});
-			$('input[name=section_type]').val(selected_section_section_type);
-		}
-	});
-
-	$('.selectpicker').selectpicker({style: 'btn-primary'});
-	$('.input-block-level').attr('placeholder','Search section...');
-	$(":file").filestyle({buttonName: "btn-primary", 'buttonText': 'choose image..'});
-
-	/*$('#chk_page_type_gallery').is(':checked'){
-		alert('hola');
-	}*/
-
-	// if($("#chk_page_type_gallery").attr('checked') == true){
-	// 	alert('refe')
-	// }
-
-	if($("#chk_page_type_gallery").is(':checked')) {  
-            $("#content_page_none").css({'display':'none'}); 
-            $("#content_page_gallery").css({'display':'block'});
-        }
-
-	$("#chk_page_type_none").click(function(){
-		$("#content_page_gallery").css({'display':'none'});
-		$("#content_page_none").css({'display':'block'});				
-	});
-	$("#chk_page_type_gallery").click(function(){
-		$("#content_page_none").css({'display':'none'});		
-		$("#content_page_gallery").css({'display':'block'});
-	});
-
-	var selected_section_section_type_default = $(".selectpicker option:selected").attr('data');
-	if(selected_section_section_type_default == 'Standard') {
-		$("#form_product").css({'display' : 'none'});
-		$('input[name=section_type]').val(selected_section_section_type_default);
-	}
-	$('.selectpicker').on('change', function() {
-	  var selected_section_section_type = $(".selectpicker option:selected").attr('data');	
-		if(selected_section_section_type == 'Standard') {
-			$("#form_product").css({'display' : 'none'});
-			$('input[name=section_type]').val(selected_section_section_type);
-		}	
-		else
-		{
-			$("#form_product").css({'display' : 'block'});
-			$('input[name=section_type]').val(selected_section_section_type);
-		}
-	});
-
-
-	//window.onload = callTinymce('<?=FX_System::url("admin/list/".$__FX_PARAMS["id"])?>');
-	tinymce.init({			   	
-       	mode : "specific_textareas",
-       	convert_urls : false,
-       	selector: "textarea.tinymce_edit_page",		       
-       	themes  : "modern",
-        plugins : "image table code link",
-        file_browser_callback : function (field_name, url, type, win) {									
-			var cmsURL       = '<?=FX_System::url("admin/list/".$__FX_PARAMS["id"])?>'; 
-			var searchString = window.location.search; // possible parameters
-			
-			tinyMCE.activeEditor.windowManager.open({
-				file            : cmsURL,
-				title           : 'Imagenes',
-				width           : 900,
-				height          : 650,
-				resizable       : "yes",
-				inline          : "yes",
-				close_previous  : "no"					 
-			},
-			{
-				window  : win,
-				input   : field_name					 
-			});	
-			var win     = tinyMCEPopup.getWindowArg("window");
-
-			var input   = tinyMCEPopup.getWindowArg("input");					
-			var res     = tinyMCEPopup.getWindowArg("resizable");
-
-			var inline  = tinyMCEPopup.getWindowArg("inline");			
-			return false;
-		} 
-	});
-
+	// Js/pages/admin/page/add_page.js		
+   createDateFormat('<?=$format_d?>');      
 </script>
-<style type="text/css">
-	.dropdown-header {
-		color: #5CB85C;
-		font-weight: bold;
-		font-size: 16px;
-	}
-	.divider {
-	    background-color: #3071A9 !important;
-	    height: 3px !important;
-	    margin: 0px 0px !important;
-	}
-	a:hover{text-decoration: none}
-</style>

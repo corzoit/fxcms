@@ -29,7 +29,21 @@
 	
 	include("_core/controller.php");
 	include("_core/classes/loader.php");
-	include("_config/routes.conf.php");
+	
+	/* Check if systems is MULTI */
+		$fx_sys = new FX_Sys();
+		$data_fx_sys = $fx_sys->getSysAllByStatus();
+		$multi_language = false;		
+		if(count($data_fx_sys) == 1)
+		{
+			include("_config/routes.conf.php"); // One Language
+		}else
+		{
+			$multi_language = true;
+			include("_config/routes_lang.conf.php"); // Two or more languages
+		}
+	/* END */
+
 	include("_core/common.php");
 
 	$view_file_parts = explode("/", $view_file);

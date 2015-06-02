@@ -4,7 +4,7 @@ define ("FX_TEMPLATE","design.php");
 if(isset($_SESSION['sysuser_id']))
 {
 	$fx_design = new FX_Design();
-	if($_POST['action'] == "saveDesign")
+	if($_POST['action'] == "insertDesign")
 	{
 		$obj_design = new FX_Design();
 		$data = array(
@@ -21,11 +21,6 @@ if(isset($_SESSION['sysuser_id']))
 				
 		echo(json_encode($response));
 		exit();
-	}
-
-	if(is_numeric($__FX_PARAMS['design_id']))
-	{
-		$data_design = $fx_design->getById($__FX_PARAMS['design_id']);
 	}	
 }
 else

@@ -18,9 +18,12 @@
 		<script type="text/javascript" src="<?=FX_System::url("js/libs/jQuery-File-Upload/js/jquery.iframe-transport.js")?>"></script>
 		<script type="text/javascript" src="<?=FX_System::url("js/libs/jQuery-File-Upload/js/jquery.fileupload.js")?>"></script>
 		<!--- -->
-        <!--<script type="text/javascript">
+        <script type="text/javascript">
 			window.FX_BASE_DOMAIN = "<?=FX_System::url()?>";
-		</script>-->
+		</script>
+
+		<script type="text/javascript" src="<?=FX_System::url("js/libs/jQuery-File-Upload/js/vendor/jquery.ui.widget.js")?>"></script>
+
 		<script type="text/javascript" src="<?=FX_System::url("js/pages/default.js")?>"></script>
 	</head>
 	<body>

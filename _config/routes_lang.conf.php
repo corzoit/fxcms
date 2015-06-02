@@ -229,36 +229,36 @@
 	/* TEMPLATE 2 CLIENT */
 		$FX_ROUTES[] = array(
 			'path' => array(
-				'/',		
+				'/{language}',		
 				),
 			'view_file' => 'client/index.php'
 		);
 		
 		$FX_ROUTES[] = array(
 			'path' => array(
-				'/test/{page_id}',		
+				'/{language}/test/{page_id}',		
 				),
 			'view_file' => 'client/test.php'
 		);
 		
 		$FX_ROUTES[] = array(
 			'path' => array(				
-				'/section/{sec_id}',
-                '/section/{sec_id}/{sub_id}',
+				'/{language}/section/{sec_id}',
+                '/{language}/section/{sec_id}/{sub_id}',
 				),
 			'view_file' => 'client/section.php'
 		);
 
 		$FX_ROUTES[] = array(
 			'path' => array(				
-				'/page/{page_id}',                
+				'/{language}/page/{page_id}',                
 				),
 			'view_file' => 'client/page.php'
 		);
 
 		$FX_ROUTES[] = array(
 			'path' => array(				
-				'/test',
+				'/{language}/test',
 				),
 			'view_file' => 'client/test.php'
 		);

@@ -1,4 +1,9 @@
 <?php
+if($multi_language)
+{
+	// Continue..
+}
+
 $language = !empty($__FX_PARAMS['language'])? $__FX_PARAMS['language']:"es";
 $languages = array("es", "en");
 $fx_section = new FX_Section();

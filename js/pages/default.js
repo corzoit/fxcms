@@ -41,7 +41,7 @@ $(function() {
     });
 
 
-    // This is a maxItem response AUTOCOMPLETE
+    // This is a maxItem response AUTOCOMPLETE    
     $.widget( "ui.autocomplete", $.ui.autocomplete, {
         options: {
             maxItems: 9999
@@ -113,7 +113,7 @@ $(function() {
         tinymce.init({              
                 mode : "specific_textareas",
                 convert_urls : false,
-                selector: "textarea.tinymce_add_page",             
+                selector: "textarea.tinymce_add_page, textarea.tinymce_edit_page",             
                 themes  : "modern",
                 plugins : "image table code link",
                 file_browser_callback : function (field_name, url, type, win) {                                 
