@@ -10,6 +10,16 @@ $not_found_page = false;
 $show_menu = true;
 if(isset($__FX_PARAMS['page_id']) && is_numeric($__FX_PARAMS['page_id']))
 {		
+
+	if($multi_language)
+	{	
+
+		$language = !empty($__FX_PARAMS['language'])? $__FX_PARAMS['language']:"es";
+		$languages = array("es","en");
+		$url_lang = $language."/";
+		in_array($language, $languages) ? true:FX_System::redirect(FX_System::url("es/"), true);		
+	}
+
 	$result_page = $obj_page->getPageByIdF($__FX_PARAMS['page_id'], date("Y-m-d H:i:s"));	
 	
 	$show_menu = $result_page['page_default'] == 1 ? false:$show_menu;

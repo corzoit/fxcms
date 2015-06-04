@@ -82,11 +82,11 @@ if(isset($_SESSION['sysuser_id']))
 					    
 					    if(LANG_SYS == $key && ($section_id == false || $title_page == false || $start_dt == false || $end_dt == false))
 					    {
-					    	echo("<p>LANG_SYS ==". $key."<p>");
+					    	/*echo("<p>LANG_SYS ==". $key."<p>");
 					    	echo("<p>section_id ==". $section_id."<p>");
 					    	echo("<p>title_page ==". $title_page."<p>");
 					    	echo("<p>start_dt ==". $start_dt."<p>");
-					    	echo("<p>end_dt ==". $end_dt."<p>");
+					    	echo("<p>end_dt ==". $end_dt."<p>");*/
 
 					    	$error = $_LANG[LANG_SYS]['edit_pag_msg_error_required']; 
 					    	$count_error_fields_required = $count_error_fields_required + 1;

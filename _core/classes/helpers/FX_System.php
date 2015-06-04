@@ -807,7 +807,7 @@
 		* @created:    Mario 	
 		*/
 
-		public static function verificaSec($language,$fx_owner_id, $use_class=false)
+		public static function verificaSec($language, $fx_owner_id, $use_class = false, $url_lang = "")
 		{					
 			$fx_section = new FX_Section();
 			$fx_section_lang = new FX_SectionLang();
@@ -839,9 +839,9 @@
 						{		
 							$val_dt_subsec = $fx_section_lang->getAllSectionLangBySectionId($val_dt_subsec['fx_section_id'],$language);
 						}			
-						$link = $val_dt_subsec['link_external'] == 0 ? FX_System::url($language."/section/".$val_dt_subsec['fx_section_id']) : $value_section['link'];
+						$link = $val_dt_subsec['link_external'] == 0 ? FX_System::url($url_lang."section/".$val_dt_subsec['fx_section_id']) : $value_section['link'];
 						$html .= "<li $name_class><a target='_self' href='$link'>".$val_dt_subsec['title']."</a></li>";	
-						$test = "1";
+						$number_ = "1";
 					}
 					else
 					{
@@ -852,9 +852,9 @@
 						//echo($val_dt_subsec["fx_section_id"]);					
 						$data_page = FX_System::verificaPage($val_dt_subsec['fx_section_id']);		
 						
-						$link = FX_System::url($language."/page/".$data_page[0]['fx_page_id']);
+						$link = FX_System::url($url_lang."page/".$data_page[0]['fx_page_id']);						
 						$html .= "<li $name_class><a target='_self' href='$link'>".$val_dt_subsec['title']."</a></li>";								
-						$test = "2";					
+						$number_ = "2";					
 					}			
 				}
 
@@ -869,30 +869,31 @@
 					$data_section = $fx_section_lang->getAllSectionLangBySectionId($fx_owner_id,$language);	
 				}				
 
-				$data_page = FX_System::verificaPage($data_section['fx_section_id'],$language);		
+				$data_page = FX_System::verificaPage($data_section['fx_section_id'],$language);	
+
 				$target = $data_section['link_external'] == 1 ? "target='".$data_section['link_target']."'" : ""; 
 				if(count($data_page)>1)
 				{
-					$html .= "<li $name_class><a href='".FX_System::url($language."/page/".$data_section['fx_section_id'])."?multiple_pages=true'>".$data_section['title']."</a></li>";
-					$test = "3";
+					$html .= "<li $name_class><a href='".FX_System::url($url_lang."page/".$data_section['fx_section_id'])."?multiple_pages=true'>".$data_section['title']."</a></li>";
+					$number_ = "3";
 				}			
 				else
 				{		
 					$link =  $data_section['link_external'] == 0 ? "":$data_section['link'];
 					if(count($data_page)==1)
 					{						
-						$link = FX_System::url($language."/page/".$data_page[0]['fx_page_id']);
+						$link = FX_System::url($url_lang."page/".$data_page[0]['fx_page_id']);
 					}					
 					$html .= "<li $name_class><a href='$link' $target>".$data_section['title']."</a></li>";
-					$test = "4";
+					$number_ = "4";
 				}		
 				$page .= true;							
 			}
 			$response = array(
 				"html" => $html,
 				"page" => $page,
-				"test" => $test 
-				);				
+				"number_" => $number_ 
+				);
 		
 			return $response;	
 		}
@@ -907,13 +908,32 @@
 			if($language == "en")
 			{
 				$temp = array();
-				 array_push($temp,$obj_pagelang->getPageLangByPageId($result_page[0]["fx_page_id"]));
+				array_push($temp,$obj_pagelang->getPageLangByPageId($result_page[0]["fx_page_id"]));
 				$result_page = $temp;
 			}
-					
-			/*echo("<pre>");
-			print_r($result_page);
-			echo("</pre>");*/
+		
 			return $result_page;
-		}		
+		}
+
+		public static function getSectionByLang($multi_language = true, $language = "")
+		{	
+			$fx_section = new FX_Section();
+			$data_section = $fx_section->getSectionByKeyMenu("top");
+			$data_section_ = $data_section;	
+			if($multi_language && $language != LANG_SYS)
+			{		
+				$data_section = array();
+				$obj_section_lang = new FX_SectionLang();		
+				foreach ($data_section_ as $key_section => $value_section) 
+				{			
+					$response = $obj_section_lang->getAllSectionLangBySectionId($value_section["fx_section_id"],$language);
+					if($response)
+					{
+						array_push($data_section, $response);
+					}			
+				}
+
+			}	
+			return $data_section;
+		}	
 	}	

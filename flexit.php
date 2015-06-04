@@ -112,8 +112,9 @@
 
 
 	if(!defined("VIEW_FILE"))
-	{
-		define("VIEW_FILE", "404.php");
+	{		
+		//define("VIEW_FILE", "404.php");
+		include("404.php");
 	}
 
 	if(file_exists("_scripts/".VIEW_FILE))

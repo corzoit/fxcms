@@ -3,17 +3,22 @@ $(function(){
     var url = window.location.pathname,
     urlRegExp = new RegExp(url.replace(/\/$/,''));
 
-    url.indexOf("section") >= 0 ? $( ".sectionMenu:eq( 0 )" ).addClass('active'):"";
+    var $menuUl = $(".menu-left");
+    $menuUl.find(".dropdown:eq(0)").addClass("sectionMenu");
+    console.log(url.indexOf("es/section"));
+    url.indexOf("es/section") >= 0 ? $( ".sectionMenu:eq( 0 )" ).addClass('active'):"";
     
-    $('.sectionList li a').each(function(){                        
+    $('.dropdown li a').each(function(){                        
         if(urlRegExp.test(this.href)){
             $(this).parents(".sectionMenu").addClass('active');            
         }
     });
     
     $("img").addClass('img-responsive');
-    $('.sectionMenu').click( function() {        
+    $menuUl.find(".dropdown").click( function() {
+        alert("11");
         $(this).addClass('active').siblings().removeClass('active');
     });    
 });
 /* END CLIENT */
+

@@ -139,11 +139,11 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
 		<div id="fx-container">
 			<?php include("_blocks/client/header.php");?>
 			<div class="container">			  		        
-	        		<div class=" wrapper">
-	        			<?php include("_views/".VIEW_FILE);?>
-	        		</div>	        	
-	        	<?php include("_blocks/client/footer.php");?>
-			</div>	        
+        		<div class="wrapper">
+        			<?php include("_views/".VIEW_FILE);?>
+        		</div>
+        		<?php include("_blocks/client/footer.php");?>
+			</div>			
 	    </div>	    		
 	</body>
 </html>
