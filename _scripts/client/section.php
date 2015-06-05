@@ -20,7 +20,7 @@ if(isset($__FX_PARAMS['sec_id']) && is_numeric($__FX_PARAMS['sec_id']))
 	}
 
 	$section = $obj_section->getById($__FX_PARAMS['sec_id']);	
-		
+	
 	$child_sections = $obj_section->getSectionByOwnerld($__FX_PARAMS['sec_id']);
 
 
@@ -49,9 +49,11 @@ if(isset($__FX_PARAMS['sec_id']) && is_numeric($__FX_PARAMS['sec_id']))
         }
     }    
 
+
+
     $rpanel_children = $obj_section->getSectionByOwnerld($sub_id);    
 	    
-    $result_page = $obj_page->getPageBySectionF($sub_id, false, date("Y-m-d H:i:s"));  
+    $result_page = $obj_page->getPageBySectionF($sub_id, false, date("Y-m-d H:i:s"));    
 
     /*if(count($result_page) == 1)
     {

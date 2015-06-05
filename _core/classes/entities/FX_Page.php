@@ -55,7 +55,7 @@ class FX_Page extends FX_BasicCRUD{
 	}
 
 	public function getPageBySectionF($section_id, $limit, $date)
-	{		
+	{				
 		if($limit==1)
 		{
 			$data = $this->conn->fetchAssoc("SELECT * FROM fx_page WHERE fx_section_id = $section_id AND deleted = 0 AND ('$date' BETWEEN start_dt AND end_dt) ORDER BY fx_page_id DESC LIMIT 1");

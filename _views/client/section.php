@@ -1,22 +1,26 @@
 <div class="content-wrapper">
+    <?php    
+    ?>
     <div class="menu-left">
         <ul>
-        <?php       
-        foreach ($child_sections as $key => $child) 
+        <?php  
+        if($child_sections)       
         {
-            $data = FX_System::verificaSec($language,$child['fx_section_id'], true,$url_lang);    
-            
-            if(isset($data['html']) && $data['page'] == false)
-            {       
-                $html_.= "<li class='dropdown'><a target='_self' href='".FX_System::url($url_lang."section/".$child['fx_section_id'])."'> ".$child['title']."</a>";
-          
-                $html_.= "</li>";            
+            foreach ($child_sections as $key => $child) 
+            {            
+                $data = FX_System::verificaSec($language,$child['fx_section_id'], true,$url_lang);                
+                if(isset($data['html']) && $data['page'] == false)
+                {       
+                    $html_.= "<li class='dropdown'><a target='_self' href='".FX_System::url($url_lang."section/".$child['fx_section_id'])."'> ".$child['title']."</a>";
+              
+                    $html_.= "</li>";            
+                }
+                elseif(isset($data['html']) && $data['page'])
+                {
+                    $html_.= $data['html'];
+                }
             }
-            elseif(isset($data['html']) && $data['page'])
-            {
-                $html_.= $data['html'];
-            }
-        }
+        }        
         echo($html_);
         ?>
         </ul>

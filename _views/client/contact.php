@@ -1,4 +1,4 @@
-<div class="row" style="width:100%; margin:0 auto;">
+<div class="content-wrapper">
 	<?=$error_message!=""? '<div class="alert alert-danger text-center">'.$error_message.'</div>':'' ?>	
 	<div class="col-lg-6">				
 		<h4 class="title-comment">Cont&aacute;cto</h4>

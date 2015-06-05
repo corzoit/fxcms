@@ -863,10 +863,12 @@
 			elseif(count($data_sub_section) == 0)
 			{
 				$data_section = $fx_section->getSectionById($fx_owner_id);
-				
+				$data_section_link = $data_section['link'];
+
 				if($language=="en")
 				{
-					$data_section = $fx_section_lang->getAllSectionLangBySectionId($fx_owner_id,$language);	
+					$data_section = $fx_section_lang->getAllSectionLangBySectionId($fx_owner_id,$language);
+					$data_section['link'] = $data_section_link;
 				}				
 
 				$data_page = FX_System::verificaPage($data_section['fx_section_id'],$language);	
@@ -879,15 +881,18 @@
 				}			
 				else
 				{		
-					$link =  $data_section['link_external'] == 0 ? "":$data_section['link'];
-					if(count($data_page)==1)
-					{						
+
+					$link =  $data_section['link_external'] == 1 ? $data_section['link'] : "";
+				
+					if($data_page[0] || $link == "")
+					{								
 						$link = FX_System::url($url_lang."page/".$data_page[0]['fx_page_id']);
 					}					
+										
 					$html .= "<li $name_class><a href='$link' $target>".$data_section['title']."</a></li>";
 					$number_ = "4";
 				}		
-				$page .= true;							
+				$page .= true;
 			}
 			$response = array(
 				"html" => $html,

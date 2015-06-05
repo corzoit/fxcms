@@ -3,7 +3,7 @@
 	if($show_menu)
 	{
 	?>
-	<div class="menu-left" style="border:1px solid orange;">
+	<div class="menu-left">
 		<ul>
 		<?php 		
 		if(is_array($child_sections))
