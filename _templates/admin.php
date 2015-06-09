@@ -152,18 +152,7 @@ xmlns:fb="http://www.facebook.com/2008/fbml"
 
 		<!--flexslider-->
 		<script type="text/javascript" src="<?=FX_System::url("js/libs/jquery.flexslider.js")?>"></script>
-		<!---->
-		<!-- Upload FIle Jquery -->
-		<link rel="stylesheet" href="<?=FX_System::url("js/libs/jQuery-File-Upload/css/style.css")?>">
-		<link rel="stylesheet" href="<?=FX_System::url("js/libs/jQuery-File-Upload/css/jquery.fileupload.css")?>">
-		<script type="text/javascript" src="<?=FX_System::url("js/libs/jQuery-File-Upload/js/vendor/jquery.ui.widget.js")?>"></script>
-		<script type="text/javascript" src="<?=FX_System::url("js/libs/jQuery-File-Upload/js/jquery.iframe-transport.js")?>"></script>
-		<script type="text/javascript" src="<?=FX_System::url("js/libs/jQuery-File-Upload/js/jquery.fileupload.js")?>"></script>
-		<!--- -->
-		
-
-
-
+		<!---->	
 
 		<script type="text/javascript" src="<?=FX_System::url("js/pages/admin/contact/contact.js")?>"></script>		
 		<script type="text/javascript" src="<?=FX_System::url("js/pages/admin/post.js")?>"></script>	

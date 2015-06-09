@@ -1104,8 +1104,12 @@ class FX_UploadHandler
                 $this->set_additional_file_properties($file);
             }
             if($this->options['file_type_img'])
-            {
-                $file->html = "<a href=".$this->options['upload_url'].$file->name." target='_blank'> <img style='padding:10px' class='img' width='185px' height='180px' class='img-responsive' src='".$this->options['upload_url'].$file->name."'></a>";        
+            {                
+                $file->html = "<a href=".$this->options['upload_url'].$file->name." target='_blank'> <img style='padding:10px' class='img' width='185px' height='180px' class='img-responsive' src='".$this->options['upload_url'].$file->name."'></a>";
+                if($this->options['type_call'] == "tiny")
+                {
+                    $file->html = "<img style='padding:10px' class='img' width='185px' height='180px' class='img-responsive' src='".$this->options['upload_url'].$file->name."'>";
+                }                
             } 
             else
             {

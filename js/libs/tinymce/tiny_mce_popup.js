@@ -29,67 +29,81 @@ var tinyMCEPopup = {
 
     // Find window & API
     parentWin = self.getWin();
-    tinymce = tinyMCE = parentWin.tinymce;
-    self.editor = tinymce.EditorManager.activeEditor;
-    self.params = self.editor.windowManager.getParams();
+    tinymce = tinyMCE = parentWin.tinymce;    
+    if(tinymce.EditorManager.activeEditor != null) // Add Mario
+    {          
+      self.editor = tinymce.EditorManager.activeEditor ;
+      self.params = self.editor.windowManager.getParams();
 
-    uiWindow = self.editor.windowManager.windows[self.editor.windowManager.windows.length - 1];
-    self.features = uiWindow.features;
-    self.uiWindow = uiWindow;
+      uiWindow = self.editor.windowManager.windows[self.editor.windowManager.windows.length - 1];
+      self.features = uiWindow.features;
+      self.uiWindow = uiWindow;
 
-    settings = self.editor.settings;
+      settings = self.editor.settings;
 
-    // Setup popup CSS path(s)
-    if (settings.popup_css !== false) {
-      if (settings.popup_css) {
-        settings.popup_css = self.editor.documentBaseURI.toAbsolute(settings.popup_css);
-      } else {
-        settings.popup_css = self.editor.baseURI.toAbsolute("plugins/compat3x/css/dialog.css");
+      // Setup popup CSS path(s)
+      if (settings.popup_css !== false) {
+        if (settings.popup_css) {
+          settings.popup_css = self.editor.documentBaseURI.toAbsolute(settings.popup_css);
+        } else {
+          settings.popup_css = self.editor.baseURI.toAbsolute("plugins/compat3x/css/dialog.css");
+        }
       }
-    }
 
-    if (settings.popup_css_add) {
-      settings.popup_css += ',' + self.editor.documentBaseURI.toAbsolute(settings.popup_css_add);
-    }
-
-    // Setup local DOM
-    self.dom = self.editor.windowManager.createInstance('tinymce.dom.DOMUtils', document, {
-      ownEvents: true,
-      proxy: tinyMCEPopup._eventProxy
-    });
-
-    self.dom.bind(window, 'ready', self._onDOMLoaded, self);
-
-    // Enables you to skip loading the default css
-    if (self.features.popup_css !== false) {
-      self.dom.loadCSS(self.features.popup_css || self.editor.settings.popup_css);
-    }
-
-    // Setup on init listeners
-    self.listeners = [];
-
-    /**
-     * Fires when the popup is initialized.
-     *
-     * @event onInit
-     * @param {tinymce.Editor} editor Editor instance.
-     * @example
-     * // Alerts the selected contents when the dialog is loaded
-     * tinyMCEPopup.onInit.add(function(ed) {
-     *     alert(ed.selection.getContent());
-     * });
-     * 
-     * // Executes the init method on page load in some object using the SomeObject scope
-     * tinyMCEPopup.onInit.add(SomeObject.init, SomeObject);
-     */
-    self.onInit = {
-      add: function(func, scope) {
-        self.listeners.push({func : func, scope : scope});
+      if (settings.popup_css_add) {
+        settings.popup_css += ',' + self.editor.documentBaseURI.toAbsolute(settings.popup_css_add);
       }
-    };
 
-    self.isWindow = !self.getWindowArg('mce_inline');
-    self.id = self.getWindowArg('mce_window_id');
+      // Setup local DOM
+      
+      /*
+        self.dom = self.editor.windowManager.createInstance('tinymce.dom.DOMUtils', document, {
+          ownEvents: true,
+          proxy: tinyMCEPopup._eventProxy
+        });
+      */
+      /* Edit Mario */ 
+        self.editor.execCommand('tinymce.dom.DOMUtils', document, {
+          ownEvents: true,
+          proxy: tinyMCEPopup._eventProxy
+        });
+
+        if(self.dom != undefined)
+        {
+          self.dom.bind(window, 'ready', self._onDOMLoaded, self);
+              
+          // Enables you to skip loading the default css
+          if (self.features.popup_css !== false) {
+            self.dom.loadCSS(self.features.popup_css || self.editor.settings.popup_css);
+          }
+        }
+      /* END EDIT MARIO */
+      // Setup on init listeners
+      self.listeners = [];
+
+      /**
+       * Fires when the popup is initialized.
+       *
+       * @event onInit
+       * @param {tinymce.Editor} editor Editor instance.
+       * @example
+       * // Alerts the selected contents when the dialog is loaded
+       * tinyMCEPopup.onInit.add(function(ed) {
+       *     alert(ed.selection.getContent());
+       * });
+       *
+       * // Executes the init method on page load in some object using the SomeObject scope
+       * tinyMCEPopup.onInit.add(SomeObject.init, SomeObject);
+       */
+      self.onInit = {
+        add: function(func, scope) {
+          self.listeners.push({func : func, scope : scope});
+        }
+      };
+
+      self.isWindow = !self.getWindowArg('mce_inline');
+      self.id = self.getWindowArg('mce_window_id');
+    }
   },
 
   /**
@@ -112,7 +126,11 @@ var tinyMCEPopup = {
    * @return {String} Argument value or default value if it wasn't found.
    */
   getWindowArg : function(name, defaultValue) {
-    var value = this.params[name];
+    if(this.params != undefined)
+    {
+      var value = this.params[name];  
+    }
+    
 
     return tinymce.is(value) ? value : defaultValue;
   },
@@ -327,7 +345,7 @@ var tinyMCEPopup = {
     }
   },
 
-  // Internal functions 
+  // Internal functions
 
   _restoreSelection : function() {
     var e = window.event.srcElement;
@@ -359,7 +377,7 @@ var tinyMCEPopup = {
         "browse": "Browse"
       };
 
-      var langCode = tinymce.settings.language || 'en';
+      var langCode = (tinymce.settings ? tinymce.settings : t.editor.settings).language || 'en';
       for (var key in map) {
         tinymce.i18n.data[langCode + "." + key] = tinymce.i18n.translate(map[key]);
       }
@@ -523,7 +541,7 @@ tinymce.util.Dispatcher = function(scope) {
     var self = this, returnValue, args = arguments, i, listeners = self.listeners, listener;
 
     self.inDispatch = true;
-    
+
     // Needs to be a real loop since the listener count might change while looping
     // And this is also more efficient
     for (i = 0; i < listeners.length; i++) {

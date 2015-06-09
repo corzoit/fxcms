@@ -197,13 +197,13 @@
 								    {
 								    ?>
 								    <div class="form-group">
-								        <label class="control-label col-xs-3"><?=$_LANG[LANG_SYS]['add_pag_gr1_lbl_thumb']?>(*):</label>
+								        <label class="control-label col-xs-3"><?=$_LANG[LANG_SYS]['add_pag_gr1_lbl_thumb']?>:</label>
 								        <div class="col-xs-7">
 								            <input type="file" name="<?=$language?>[thumbnail]">
 								        </div>
 								    </div>
 								    <div class="form-group">
-								        <label class="control-label col-xs-3"><?=$_LANG[LANG_SYS]['add_pag_gr1_lbl_img']?>(*):</label>
+								        <label class="control-label col-xs-3"><?=$_LANG[LANG_SYS]['add_pag_gr1_lbl_img']?>:</label>
 								        <div class="col-xs-7">
 								        	<input type="file" name="<?=$language?>[image]">
 								        </div>
@@ -256,11 +256,15 @@
 									    	?>
 								            <input id="chk_page_type_none" <?=$checked_page?> type="radio" value="none" name="<?=$language?>[page_type]"><?=$_LANG[LANG_SYS]['add_pag_check_type_page_none']?>
 								            <input id="chk_page_type_gallery" <?=$checked_page = $_POST[$language]['page_type'] == 'Gallery' ? "checked='checked'" : "" ?> type="radio" value="Gallery" name="<?=$language?>[page_type]"><?=$_LANG[LANG_SYS]['add_pag_check_type_page_galery']?>
+								        </div>								        
+								    </div>	
+								    <div class="form-group">
+								    	<div class="col-xs-3"></div>
+								    	<div id="content_page_gallery" style="display:none" class="col-xs-7">
+								            <!--<input type="submit" class="btn btn-primary" value="<?=$_LANG[LANG_SYS]['add_pag_btn_create_galery']?>">-->
+								            <small><?=$_LANG[LANG_SYS]['add_pag_gallery_note']?></small>
 								        </div>
-								        <div id="content_page_gallery" style="display:none" class="col-xs-10 col-xs-offset-1">								            
-								            <input type="submit" class="btn btn-primary" value="<?=$_LANG[LANG_SYS]['add_pag_btn_create_galery']?>">
-								        </div>
-								    </div>								    
+								    </div>							    
 								    <div class="form-group">
 								    	<label  class="control-label col-xs-3 content_page_none"><?=$_LANG[LANG_SYS]['add_pag_lbl_lbl_cont']?>:</label>
 								        <div class="col-xs-10 col-xs-offset-1 content_page_none">

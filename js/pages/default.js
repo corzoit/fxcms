@@ -1,9 +1,25 @@
 //JQUERY CODE
-$(function() { 	
+$(function() { 
+
+    /* TEST ::::::  */
+       $("#daniel").fancybox({                                
+            type        :'iframe',
+            scrolling   : 'no',
+            maxWidth    : 800,        
+            fitToView   : true,
+            width       : '70%',
+            height      : '70%',
+            autoSize    : false,
+            closeClick  : false,
+            openEffect  : 'none',
+            closeEffect : 'none'           
+        });
+
+    /* END TEST */
+
     /* Change Language */
     $(".btn-language").click(function(){        
-        var fx_sys_id = $(this).attr("data-id");
-        console.log("fx_sys_id::"  + fx_sys_id);
+        var fx_sys_id = $(this).attr("data-id");        
         $.ajax({
             method : "POST",
             data   : {
@@ -117,7 +133,7 @@ $(function() {
                 themes  : "modern",
                 plugins : "image table code link",
                 file_browser_callback : function (field_name, url, type, win) {                                 
-                    var cmsURL       = window.FX_BASE_DOMAIN  + "admin/list/"; 
+                    var cmsURL       = window.FX_BASE_DOMAIN  + "admin/list/?type=tiny"; 
                     var searchString = window.location.search; // possible parameters
                     
                     tinyMCE.activeEditor.windowManager.open({
@@ -138,109 +154,11 @@ $(function() {
                     var input   = tinyMCEPopup.getWindowArg("input");                   
                     var res     = tinyMCEPopup.getWindowArg("resizable");
 
-                    var inline  = tinyMCEPopup.getWindowArg("inline");          
+                    var inline  = tinyMCEPopup.getWindowArg("inline");
                     return false;
                 } 
             });
-    /* END TINYMCE */
-
-    /* PAGE GALERY */
-        var $selectFolder = $("#btnSelectFolder");
-        if($selectFolder.length)
-        {               
-            $("#btnSelectFolder").fancybox({'hideOnContentClick' :   false, 'showCloseButton' : true, 'modal': true}).trigger("click");  
-            $selectFolder.click(function(){ 
-                $(".list_images").html();               
-                $selectFolder.hide();
-            })
-            $(".folderId, .btnCloseDefault").click(function(){
-                var folder_name = $(this).attr("data-id");
-                
-                $(".language").val(folder_name);
-                $.ajax({
-                    type  : "POST",
-                    cache : false,
-                    data  : {
-                        action : "showImages",
-                        lang   : folder_name
-                    },
-                    success: function(response){
-                        $(".list_images").html(response);
-                    }
-                });
-
-                $.fancybox.close();
-                $selectFolder.show();
-            });    
-        }
-    /* END PAGE GALERY */
-
-    /**/
-
-    /* FILEUPLOAD PLUGIN */
-        var url = ''; 
-        $('.fileupload').fileupload({               
-            url :   url,    
-            dataType: 'json',
-            formData: [
-                { name : 'action' , value : "uploadImage" }                 
-            ],
-            add : function(e, data){                        
-                var uploadErrors = [];
-                // var acceptFileTypes = /^(image|dfgfdgfdg)\/(gif|jpe?g|png)$/i;          
-                //var acceptFileTypes =  /(\.|\/)(gif|jpe?g|png|pdf|vnd.ms-excel|vnd.openxmlformats-officedocument.wordprocessingml.document)$/i;
-                var $language = $(".language");                
-                var acceptFileTypes =  /(\.|\/)(gif|jpe?g|png|pdf|docx?|xlsx?|rar|zip)$/i;                
-                acceptFileTypes = $language.length ? /(\.|\/)(gif|jpe?g|png)$/i : acceptFileTypes;
-
-                if(data.originalFiles[0]['name'].length && !acceptFileTypes.test(data.originalFiles[0]['name'])) {
-                    uploadErrors.push('Not an accepted file type');
-                }
-                if(data.originalFiles[0]['size'].length && data.originalFiles[0]['size'] > 5000000) {
-                    uploadErrors.push('Filesize is too big');
-                }
-                if(uploadErrors.length > 0) {
-                    alert(uploadErrors.join("\n"));
-                } else {
-                    var name_file = data.originalFiles[0]['name'];
-                    var file_type = name_file.split(".");
-                    data.formData = { 'action' : 'uploadImage' , 'file_type' : file_type[1]};                    
-                    var $language = $(".language");
-                    if($language.length)
-                    {
-                        data.formData.folder_extra = $language.val();// Add Extra
-                    }
-                    
-                    data.submit();
-                }
-            },     
-            done: function (e, data) {              
-                $.each(data.result.files, function (index, file) {
-                    if(file.error) {
-                        $("#files").removeClass('alert-success').addClass('alert-danger').html(file.error).css({'display':'block'});
-                        $("#progress").css({'display':'none'});
-                    }
-                    else //success
-                    {                                           
-                        $(".files").html('').css({'display':'none'});
-                        $(".files").removeClass('alert-danger').addClass('alert-success').html('The image was uploaded correctly').css({'display':'block'});
-                        $('.list_images').prepend($.parseHTML(file.html));
-                        $(".progress").css({'display':'block'});
-                    }                               
-                });
-            },
-            progressall: function (e, data) {
-                var progress = parseInt(data.loaded / data.total * 100, 10);
-                $('.progress .progress-bar').css(
-                    'width',
-                    progress + '%'
-                );
-
-            }
-        }).prop('disabled', !$.support.fileInput)
-        .parent().addClass($.support.fileInput ? undefined : 'disabled');
-    /*   END FILEUPLOAD  */
-        
+    /* END TINYMCE */        
 });
 
 

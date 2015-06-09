@@ -57,8 +57,8 @@ if(isset($_SESSION['sysuser_id']))
 			    	$title_page =  strlen(trim($_POST[$key_post]['title_page'])) ? true : false;
 			    	$start_dt =  strlen(trim($_POST[$key_post]['start_dt'])) ? true : false;
 			    	$end_dt =  strlen(trim($_POST[$key_post]['end_dt'])) ? true : false;
-				    $thumbnail = '';
-				    $image = '';
+				    $thumbnail = true;
+				    $image = true;
 				    
 				    if(strlen(trim($_FILES[$key_post]['name']['thumbnail'])))
 				    {
@@ -68,8 +68,9 @@ if(isset($_SESSION['sysuser_id']))
 				    {
 					    $image = CC_FileHandler::checkFilenameExt($_FILES[$key_post]['name']['image'], array('jpg', 'png')) ? $_FILES[$key_post]['name']['image'] : false;
 				    }
+				   
 				    if($thumbnail == false || $image == false)
-				    {
+				    {							    	
 				    	$count_error_image = $count_error_image + 1;
 				    	$error_image = $_LANG[LANG_SYS]['add_pag_msg_error_img_inval'];
 				    	$errors[$key_post]['error_image_invalids'] = $error_image;
@@ -90,7 +91,7 @@ if(isset($_SESSION['sysuser_id']))
 			    } 											
 			}
 		}
-
+		
 		if($count_error_image == 0 && $count_error_fields_required == 0)
 		{
 			foreach ($_POST as $key => $value)
@@ -203,10 +204,10 @@ if(isset($_SESSION['sysuser_id']))
 			    }			    				   
 			}	
 			
-			if($_POST[LANG_SYS]['page_type'] == "Gallery")
+			/*if($_POST[LANG_SYS]['page_type'] == "Gallery")
 			{					
 				FX_System::redirect(FX_System::url("admin/page/galery/?fx_page_id=".$new_id),true);
-			}
+			}*/
 
 			unset($_POST);
 			$message = $_LANG[LANG_SYS]['add_pag_msg_success']; 

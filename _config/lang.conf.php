@@ -419,6 +419,7 @@
 	$_LANG['en']['add_pag_check_type_page_galery']	  = "Gallery";
 	$_LANG['en']['add_pag_btn_create_galery']		  = "Create Galery";
 	$_LANG['en']['add_pag_btn_edit_galery']			  = "Edit Galery";
+	$_LANG['en']['add_pag_gallery_note']			  = "If your site is of type gallery , you can upload images when editing.";
 	$_LANG['en']['add_pag_lbl_lbl_design']		  	  = "Select Design";
 	$_LANG['en']['add_pag_gr2_title'] 		    	  = "Product Info";
 	$_LANG['en']['add_pag_gr2_lbl_stock'] 	    	  = "Stock";
@@ -460,6 +461,7 @@
 	$_LANG['es']['add_pag_check_type_page_galery']	  = "Galer&iacute;a";
 	$_LANG['es']['add_pag_btn_create_galery']		  = "Crear Galer&iacute;a";
 	$_LANG['es']['add_pag_btn_edit_galery']			  = "Editar Galer&iacute;a";
+	$_LANG['es']['add_pag_gallery_note']			  = "Si su página es de tipo galería, usted puede subir imágenes al momento de editar.";
 	$_LANG['es']['add_pag_lbl_lbl_design']		  	  = "Seleccione Dise&ntilde;o";
 	$_LANG['es']['add_pag_gr2_title'] 		    	  = "Informaci&oacute;n del producto";
 	$_LANG['es']['add_pag_gr2_lbl_stock'] 	    	  = "Stock";

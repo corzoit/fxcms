@@ -6,7 +6,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<script type="text/javascript" src="<?=FX_System::url("js/libs/jquery/jquery-1.11.0.min.js")?>"></script>		
-    	<script src="<?=FX_System::url("js/libs/tinymce/tiny_mce_popup.js")?>"></script>
+    	<script type="text/javascript" src="<?=FX_System::url("js/libs/tinymce/tiny_mce_popup.js")?>"></script>
 		<script type="text/javascript" src="<?=FX_System::url("js/libs/bootstrap/js/bootstrap.min.js")?>"></script>
         <link rel="stylesheet" type="text/css" href="<?=FX_System::url("js/libs/bootstrap/css/bootstrap.min.css")?>">
         <!-- Upload FIle Jquery -->
@@ -17,14 +17,18 @@
 		<script type="text/javascript" src="<?=FX_System::url("js/libs/jQuery-File-Upload/js/vendor/jquery.ui.widget.js")?>"></script>
 		<script type="text/javascript" src="<?=FX_System::url("js/libs/jQuery-File-Upload/js/jquery.iframe-transport.js")?>"></script>
 		<script type="text/javascript" src="<?=FX_System::url("js/libs/jQuery-File-Upload/js/jquery.fileupload.js")?>"></script>
+		<!--FancyBox-->     
+		<script type="text/javascript" src="<?=FX_System::url("js/libs/jquery/fancyapps-fancyBox-18d1712/source/jquery.fancybox.pack.js?v=2.1.5")?>"></script>
+		<link rel="stylesheet" type="text/css" href="<?=FX_System::url("js/libs/jquery/fancyapps-fancyBox-18d1712/source/jquery.fancybox.css?v=2.1.5")?>" media="screen" />
+
+		<script type="text/javascript" src="<?=FX_System::url("js/pages/admin/list.js")?>"></script>	
+
+
 		<!--- -->
         <script type="text/javascript">
 			window.FX_BASE_DOMAIN = "<?=FX_System::url()?>";
 		</script>
 
-		<script type="text/javascript" src="<?=FX_System::url("js/libs/jQuery-File-Upload/js/vendor/jquery.ui.widget.js")?>"></script>
-
-		<script type="text/javascript" src="<?=FX_System::url("js/pages/default.js")?>"></script>
 	</head>
 	<body>
 		<?php include("_views/".VIEW_FILE) ;?>

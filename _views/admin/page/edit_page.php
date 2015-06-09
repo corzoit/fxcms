@@ -301,8 +301,15 @@
 								            <input id="chk_page_type_none" <?=$checked_page?> type="radio" value="none" name="<?=$language?>[page_type]"><?=$_LANG[LANG_SYS]['add_pag_check_type_page_none']?>
 								            <input id="chk_page_type_gallery" <?=$checked_page = $data_page['page_type'] == 'Gallery' ? "checked='checked'" : "" ?> type="radio" value="Gallery" name="<?=$language?>[page_type]"><?=$_LANG[LANG_SYS]['add_pag_check_type_page_galery']?>
 								        </div>
-								        <div id="content_page_gallery" style="<?=$data_page['page_type'] == 'Gallery'? 'display:block':'display:none'?>" class="col-xs-10 col-xs-offset-1">								            
+								        <!--<div id="content_page_gallery" style="<?=$data_page['page_type'] == 'Gallery'? 'display:block':'display:none'?>" class="col-xs-10 col-xs-offset-1">								            
 								            <input type="submit" class="btn btn-primary" value="<?=$_LANG[LANG_SYS]['add_pag_btn_edit_galery']?>">
+								        </div>-->
+								    </div>								    
+								     <div class="form-group">
+								    	<div class="col-xs-3"></div>								    	
+								    	<div id="content_page_gallery" style="<?=$data_page['page_type'] == 'Gallery' ? 'display:block;': 'display:none;'?>" class="col-xs-7">
+								            <!--<input type="submit" class="btn btn-primary" value="<?=$_LANG[LANG_SYS]['add_pag_btn_create_galery']?>">-->
+								            <a href="<?=FX_System::url('admin/list/?page_id='.$data_page['fx_page_id']).'&type=page'?>" class="fancybox" id="daniel">UPLOAD FILE FOR GALLERY</a>								            
 								        </div>
 								    </div>								    
 								    <div class="form-group">
