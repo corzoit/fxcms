@@ -42,7 +42,7 @@ class FX_UploadHandler
 
     function __construct($options = null, $initialize = true, $error_messages = null) {
         $this->response = array();
-        $folder = $options['fx_folder_name'] != "" ? $options['fx_folder_name']."/":"";
+        $folder = $options['fx_folder_name'] != "" ? $options['fx_folder_name'] :"";
         $this->options = array(
             'script_url' => $this->get_full_url().'/',
             'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/file/'.$folder  ,
@@ -1045,76 +1045,91 @@ class FX_UploadHandler
         $this->destroy_image_object($file_path);
     }
 
-    protected function handle_file_upload($uploaded_file, $name, $size, $type, $error,
-            $index = null, $content_range = null) {
+    protected function handle_file_upload($uploaded_file, $name, $size, $type, $error, $index = null, $content_range = null) 
+    {
         $file = new \stdClass();
-        //MARIO
-                       
-            $file->name = $this->get_file_name($uploaded_file, $name, $size, $type, $error,
-                $index, $content_range);
-            
-            $date_rand = date("YmdHis").rand(10,99);
-            $file_data = explode(".", $file->name);            
-            $file->name = $file_data[0]."_".$date_rand.".".$file_data[1];            
+        //MARIO                    
+        $file->name = $this->get_file_name($uploaded_file, $name, $size, $type, $error,
+            $index, $content_range);
+        
+        $date_rand = date("YmdHis").rand(10,99);
+        $file_data = explode(".", $file->name);            
+        $file->name = $file_data[0]."_".$date_rand.".".$file_data[1];            
 
-            $file->size = $this->fix_integer_overflow((int)$size);
-            $file->type = $type;
-            if($file->type)
-            if ($this->validate($uploaded_file, $file, $error, $index)) {
-                $this->handle_form_data($file, $index);
-                $upload_dir = $this->get_upload_path();
-                if (!is_dir($upload_dir)) {
-                    mkdir($upload_dir, $this->options['mkdir_mode'], true);
-                }
-                $file_path = $this->get_upload_path($file->name);
-                $append_file = $content_range && is_file($file_path) &&
-                    $file->size > $this->get_file_size($file_path);
-                if ($uploaded_file && is_uploaded_file($uploaded_file)) {
-                    // multipart/formdata uploads (POST method uploads)
-                    if ($append_file) {
-                        file_put_contents(
-                            $file_path,
-                            fopen($uploaded_file, 'r'),
-                            FILE_APPEND
-                        );
-                    } else {
-                        move_uploaded_file($uploaded_file, $file_path);
-                    }
-                } else {
-                    // Non-multipart uploads (PUT method support)
+        $file->size = $this->fix_integer_overflow((int)$size);
+        $file->type = $type;
+        if($file->type)
+        if ($this->validate($uploaded_file, $file, $error, $index)) 
+        {
+            $this->handle_form_data($file, $index);
+            $upload_dir = $this->get_upload_path();
+            if (!is_dir($upload_dir)) {
+                mkdir($upload_dir, $this->options['mkdir_mode'], true);
+            }
+            $file_path = $this->get_upload_path($file->name);
+            $append_file = $content_range && is_file($file_path) &&
+                $file->size > $this->get_file_size($file_path);
+            if ($uploaded_file && is_uploaded_file($uploaded_file)) {
+                // multipart/formdata uploads (POST method uploads)
+                if ($append_file) {
                     file_put_contents(
                         $file_path,
-                        fopen('php://input', 'r'),
-                        $append_file ? FILE_APPEND : 0
+                        fopen($uploaded_file, 'r'),
+                        FILE_APPEND
                     );
-                }
-                $file_size = $this->get_file_size($file_path, $append_file);
-                if ($file_size === $file->size) {
-                    $file->url = $this->get_download_url($file->name);
-                    if ($this->is_valid_image_file($file_path)) {
-                        $this->handle_image_file($file_path, $file);
-                    }
                 } else {
-                    $file->size = $file_size;
-                    if (!$content_range && $this->options['discard_aborted_uploads']) {
-                        unlink($file_path);
-                        $file->error = $this->get_error_message('abort');
-                    }
+                    move_uploaded_file($uploaded_file, $file_path);
                 }
-                $this->set_additional_file_properties($file);
+            } else {
+                // Non-multipart uploads (PUT method support)
+                file_put_contents(
+                    $file_path,
+                    fopen('php://input', 'r'),
+                    $append_file ? FILE_APPEND : 0
+                );
             }
+            $file_size = $this->get_file_size($file_path, $append_file);
+            if ($file_size === $file->size) {
+                $file->url = $this->get_download_url($file->name);
+                if ($this->is_valid_image_file($file_path)) {
+                    $this->handle_image_file($file_path, $file);
+                }
+            } else {
+                $file->size = $file_size;
+                if (!$content_range && $this->options['discard_aborted_uploads']) {
+                    unlink($file_path);
+                    $file->error = $this->get_error_message('abort');
+                }
+            }
+            $this->set_additional_file_properties($file);
+        }        
+        
+        if(count($file))
+        {
+            $fx_media_id = FX_System::processImgDB($this->options['fx_table'],$this->options['fx_folder_id'],$this->options['fx_folder_name'],$file);            
+            $file->media_id = $fx_media_id;
             if($this->options['file_type_img'])
-            {                
-                $file->html = "<a href=".$this->options['upload_url'].$file->name." target='_blank'> <img style='padding:10px' class='img' width='185px' height='180px' class='img-responsive' src='".$this->options['upload_url'].$file->name."'></a>";
+            {                                
+                $file->html = "
+                                <div class='showDivImage'>
+                                    <a href=".$this->options['upload_url'].$file->name." target='_blank'> <img class='img' width='185px' height='180px' class='img-responsive' src='".$this->options['upload_url'].$file->name."'></a>
+                                    <p class='text-center'><a href='Eliminar'>Eliminar</a></p>
+                                </div>";
                 if($this->options['type_call'] == "tiny")
                 {
-                    $file->html = "<img style='padding:10px' class='img' width='185px' height='180px' class='img-responsive' src='".$this->options['upload_url'].$file->name."'>";
+                    $file->html = "
+                                <div class='showDivImage'>
+                                    <img class='img' src='".$this->options['upload_url'].$file->name."'>
+                                    <p class='text-center'><a href='Eliminar'>Eliminar</a></p>
+                                </div>";
                 }                
             } 
             else
             {
-                $file->html = "<p><a href=".$this->options['upload_url'].$file->name." target='_blank'>".$file->name."</a></p>";          
+                $file->html = "<p><a href=".$this->options['upload_url'].$file->name." target='_blank'>".$file->name."</a></p>";
             }
+        }
+
         return $file;
     }
 
@@ -1370,13 +1385,8 @@ class FX_UploadHandler
                 );
             }
         }        
+                            
         $response = array($this->options['param_name'] => $files);
-
-        if(count($files))
-        {
-            FX_System::processImgDB($this->options['fx_table'],$this->options['fx_folder_id'],$this->options['fx_folder_name'],$files);
-        }       
-
         return $this->generate_response($response, $print_response);
     }
 

@@ -28,6 +28,29 @@
         <script type="text/javascript">
 			window.FX_BASE_DOMAIN = "<?=FX_System::url()?>";
 		</script>
+		<style type="text/css">
+		/* Upload File Plugin */
+		    .showDivImage{
+		        width: 185px!important;
+		        height: 210px!important;
+		        border: 1px solid #C32234 !important;
+		        float: left;
+		        margin-left: 5px;
+		    }
+
+		    .showDivImage > img {
+		        padding:10px;
+		        width:185px;
+		        height:180px;
+		    }
+
+		    .showDivImage > a > img {
+		        padding:10px;
+		        width:185px;
+		        height:180px;
+		    }
+		/* END */
+		</style>
 
 	</head>
 	<body>

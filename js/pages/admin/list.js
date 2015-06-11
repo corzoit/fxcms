@@ -21,7 +21,7 @@ $(function(){
                 var folder_name = $(this).attr("data-id");
                 
                 $("#language").val(folder_name);
-                /*$.ajax({
+                $.ajax({
                     type  : "POST",
                     cache : false,
                     data  : {
@@ -29,9 +29,10 @@ $(function(){
                         lang   : folder_name
                     },
                     success: function(response){
+                        console.log(response);
                         $(".list_images").html(response);
                     }
-                });*/
+                });
 
                 $.fancybox.close();
                 $selectFolder.show();
@@ -96,10 +97,12 @@ $(function(){
         }).prop('disabled', !$.support.fileInput)
         .parent().addClass($.support.fileInput ? undefined : 'disabled');
     /* END FILEUPLOAD  */
+    
+    getValueSrc(); // Get Val src
 
     /* SHOW VALUE IN INPUT TINYMCE*/
     function getValueSrc()
-    {
+    {        
     	$('.img').click(function(event){			
 	        var selectedImage   = $(this).attr('src');
 	        var win                 = tinyMCEPopup.getWindowArg("window");

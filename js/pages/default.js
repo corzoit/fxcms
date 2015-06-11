@@ -4,11 +4,10 @@ $(function() {
     /* TEST ::::::  */
        $("#daniel").fancybox({                                
             type        :'iframe',
-            scrolling   : 'no',
-            maxWidth    : 800,        
+            scrolling   : 'no',            
             fitToView   : true,
-            width       : '70%',
-            height      : '70%',
+            width       : '90%',
+            height      : '90%',
             autoSize    : false,
             closeClick  : false,
             openEffect  : 'none',

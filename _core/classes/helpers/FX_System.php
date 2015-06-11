@@ -783,21 +783,22 @@
 			}
 		}
 
-		public static function processImgDB($fx_table, $fx_folder_id, $folder_name, $array_data)
+		public static function processImgDB($fx_table, $fx_folder_id, $folder_name, $file_data)
 		{
 			if(trim($fx_table) == "fx_media")
 			{
 				$obj_media = new FX_Media();				
 				$data = array(
 					"fx_folder_id"	=> $fx_folder_id,
-					"title"			=> $array_data[0]->name,
-					"file"			=> $array_data[0]->name,
-					"file_type"		=> $array_data[0]->type,
-					"size_kb"		=> $array_data[0]->size,
+					"title"			=> $file_data->name,
+					"file"			=> $file_data->name,
+					"file_type"		=> $file_data->type,
+					"size_kb"		=> $file_data->size,
 					"deleted"		=> 0
 				);
 				$response = $obj_media->insert($data);				
 			}
+			return $response;
 		}
 
 		/**
